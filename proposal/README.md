@@ -1,4 +1,4 @@
-# CS151-<Syllabi Interpreter/Chatbot>
+# CS151-Syllabi Interpreter/Chatbot
 
 # [Team 11: Brandon Arriaga, Vaishnavi Kouru, Ace Lavilla,Anhduy Phan]
 
