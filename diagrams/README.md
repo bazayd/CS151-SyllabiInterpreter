@@ -10,3 +10,4 @@
 
 ## Use Case Diagram
 
+![Use case Diagaram.](./Usecasediagram.png)
