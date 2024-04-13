@@ -1,11 +1,15 @@
 # UML Diagrams : Syllabi Interpreter
 
+### Below is a table with all the diagrams and their description, You may view each file separately by clicking the hyperlinks or viewing them below.
 
 
-1. Use Case Diagram
-2. State Diagram
-3. Sequence Diagram
-4. Class Diagram
+| Diagram | Description |
+| ------------- | ------------- |
+| [Use Case diagram file](./usecasediagram.png) | Content Cell  |
+| [State Diagram](./statediagram.png)  | Content Cell  |
+| [Sequence Diagram](./sequencediagram.png)  | Content Cell  |
+| [Class Diagram]  | Content Cell  |
+
 
 
 ## Use Case Diagram
@@ -15,4 +19,9 @@
 
 ## State Diagram
 
-[State UML Diagram](./statediagram.pdf)
+![State UML Diagram](./statediagram.png)
+
+
+# Sequence Diagram
+
+![Sequence UML Diagram](./sequencediagram.png)
