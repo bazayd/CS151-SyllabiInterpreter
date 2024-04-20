@@ -1,6 +1,6 @@
 package dataManipulation;
 
-public class Syllabus {
+public class ParagraphResponse {
     public static void main(String[] args) {
 
     }

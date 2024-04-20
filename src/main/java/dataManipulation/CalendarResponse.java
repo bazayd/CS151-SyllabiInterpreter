@@ -1,6 +1,6 @@
 package dataManipulation;
 
-public class Calendar {
+public class CalendarResponse {
     public static void main(String[] args) {
 
     }

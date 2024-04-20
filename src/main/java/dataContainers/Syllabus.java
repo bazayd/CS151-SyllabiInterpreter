@@ -1,6 +1,6 @@
-package dataManipulation;
+package dataContainers;
 
-public class Paragraph {
+public class Syllabus {
     public static void main(String[] args) {
 
     }
