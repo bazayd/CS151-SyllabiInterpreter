@@ -1,6 +1,6 @@
 package dataContainers;
 
-public class Test implements SyllabusEntities {
+public class Test implements SyllabusEntities, Comparable<Test> {
     public static void main(String[] args) {
 
     }
@@ -15,5 +15,13 @@ public class Test implements SyllabusEntities {
 
     public String getDueDate() {
         return null;
+    }
+
+    public TestType getType () {
+        return TestType.DEFAULT_TEST;
+    }
+
+    public int compareTo(Test o) {
+        return -1;
     }
 }

@@ -1,6 +1,6 @@
 package ui;
 
-import customExceptions.IntentResponseAndViewControllerCollision;
+import customExceptions.IntentResponseAndViewControllerCollisionException;
 import dataManipulation.CalendarResponse;
 import dataManipulation.IntentResponse;
 
@@ -11,7 +11,7 @@ public class CalendarViewController implements ViewController {
 
     public void buildAccordingToIntentResponse(IntentResponse o) {
         if (!(o instanceof CalendarResponse))
-            throw new IntentResponseAndViewControllerCollision();
+            throw new IntentResponseAndViewControllerCollisionException();
 
     }
 }

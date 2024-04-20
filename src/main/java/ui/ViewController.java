@@ -2,5 +2,5 @@ package ui;
 import dataManipulation.IntentResponse;
 
 public interface ViewController {
-    void buildAccordingToIntentResponse (IntentResponse o);
+    void buildAccordingToIntentResponse (IntentResponse o) throws IllegalArgumentException;
 }

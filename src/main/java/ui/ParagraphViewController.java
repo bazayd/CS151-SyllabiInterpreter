@@ -1,6 +1,6 @@
 package ui;
 
-import customExceptions.IntentResponseAndViewControllerCollision;
+import customExceptions.IntentResponseAndViewControllerCollisionException;
 import dataManipulation.IntentResponse;
 import dataManipulation.ParagraphResponse;
 
@@ -11,6 +11,6 @@ public class ParagraphViewController implements ViewController {
 
     public void buildAccordingToIntentResponse(IntentResponse o) {
         if (!(o instanceof ParagraphResponse))
-            throw new IntentResponseAndViewControllerCollision();
+            throw new IntentResponseAndViewControllerCollisionException();
     }
 }

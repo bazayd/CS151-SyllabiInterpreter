@@ -1,6 +1,6 @@
 package ui;
 
-import customExceptions.IntentResponseAndViewControllerCollision;
+import customExceptions.IntentResponseAndViewControllerCollisionException;
 import dataManipulation.IntentResponse;
 import dataManipulation.ListResponse;
 
@@ -11,7 +11,7 @@ public class ListViewController implements ViewController {
 
     public void buildAccordingToIntentResponse(IntentResponse o) {
         if (!(o instanceof ListResponse))
-            throw new IntentResponseAndViewControllerCollision();
+            throw new IntentResponseAndViewControllerCollisionException();
 
     }
 }
