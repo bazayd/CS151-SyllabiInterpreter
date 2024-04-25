@@ -6,4 +6,5 @@ public interface SyllabusEntities {
     String getTitle();
     String getDueDate();
     // TODO decide all essential methods
+
 }
