@@ -5,16 +5,16 @@ import java.util.Arrays;
 public class Test implements SyllabusEntities, Comparable<Test> {
 
     private TestType testType;
+    private String title;
 
-    public Test(TestType testType) {
+    public Test(TestType testType, String title) {
         this.testType = testType;
+        this.title = title;
     }
-
 
     public String[] getInfo() {
 
         String[] testInfo = new String[3];
-
 
         testInfo[0] = getTitle();
         testInfo[1] = getDueDate();
@@ -24,16 +24,15 @@ public class Test implements SyllabusEntities, Comparable<Test> {
     }
 
 
-
     public String getTitle() {
         if (testType == TestType.FINAL) {
-            return "Final Exam";
+            return "Final Exam: " + title;
         }else if (testType == TestType.MIDTERM) {
-            return "Midterm Exam";
+            return "Midterm Exam: " + title;
         }else if (testType == TestType.QUIZ) {
-            return "Quiz";
+            return "Quiz: " + title;
         }else {
-            return "Test";
+            return "Test: " + title;
         }
     }
 
@@ -41,9 +40,9 @@ public class Test implements SyllabusEntities, Comparable<Test> {
         return null;
     }
 
-    public void setTestType(TestType testType) {
-        this.testType = testType;
-    }
+//    public void setTestType(TestType testType) {
+//        this.testType = testType;
+//    }
 
     public TestType getType () {
         return testType;

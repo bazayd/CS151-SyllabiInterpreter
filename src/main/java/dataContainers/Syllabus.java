@@ -20,7 +20,7 @@ public class Syllabus {
         }
     }
     private List<Assignment> assignments = new ListWithRetainedOrder<>();
-    private List<Test> tests = new ListWithRetainedOrder<>();
+    private List<Test> allTests = new ListWithRetainedOrder<>();
     private List<Test> finals = new ListWithRetainedOrder<>();
     private List<Test> midterms = new ListWithRetainedOrder<>();
     private List<Test> quizzes = new ListWithRetainedOrder<>();
@@ -39,15 +39,23 @@ public class Syllabus {
             midterms.add(test);
         } else if (type == TestType.QUIZ) {
             quizzes.add(test);
-        }else {
-            tests.add(test);
         }
+        allTests.add(test);
     }
 
+    public List<Test> getTests (TestType type) {
+        if (type == TestType.FINAL)
+            return new ArrayList<>(finals); // just doing this so we don't get errors later
+        else if (type == TestType.MIDTERM)
+            return new ArrayList<>(midterms);
+        else if (type == TestType.QUIZ)
+            return new ArrayList<>(quizzes);
+        return new ArrayList<>(allTests);
+    }
 
-    public void accessTests() {
+    public void printAllTests () {
         System.out.println("Following Exams: ");
-        for (Test test : tests) {
+        for (Test test : allTests) {
             System.out.println(Arrays.toString(test.getInfo()));
         }
         for (Test test: finals) {
@@ -61,17 +69,14 @@ public class Syllabus {
         }
     }
 
-
     // Adds new assignments
     public void addAssignment (Assignment assignment) {
-        if (assignment == null) {
+        if (assignment == null)
             return;
-        }else {
-            assignments.add(assignment);
-        }
+        assignments.add(assignment);
     }
 
-    public void accessAssignments() {
+    public void printAssignments() {
         for (Assignment assignment : assignments) {
             System.out.println(assignment);
         }
