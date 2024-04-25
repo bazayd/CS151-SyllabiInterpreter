@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Syllabus {
-    private class ListWithRetainedOrder <T extends Comparable<T>> extends ArrayList<T> {
+    private static class ListWithRetainedOrder <T extends Comparable<T>> extends ArrayList<T> {
         @Override
         public boolean add (T o) {
             int index = Collections.binarySearch(this, o);
@@ -46,8 +46,18 @@ public class Syllabus {
 
 
     public void accessTests() {
+        System.out.println("Following Exams: ");
         for (Test test : tests) {
-            System.out.println(test);
+            System.out.println(Arrays.toString(test.getInfo()));
+        }
+        for (Test test: finals) {
+            System.out.println(Arrays.toString(test.getInfo()));
+        }
+        for (Test test : midterms) {
+            System.out.println(Arrays.toString(test.getInfo()));
+        }
+        for (Test test: quizzes) {
+            System.out.println(Arrays.toString(test.getInfo()));
         }
     }
 
