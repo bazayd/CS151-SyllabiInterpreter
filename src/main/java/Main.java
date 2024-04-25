@@ -1,5 +1,11 @@
+import dataContainers.Assignment;
+import dataContainers.Syllabus;
+import dataContainers.Test;
+import org.bouncycastle.tsp.TSPUtil;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Test print.");
+        Syllabus syllabus = new Syllabus();
+
     }
 }
