@@ -24,7 +24,8 @@ public class Syllabus {
     private List<Test> quizzes = new ListWithRetainedOrder<>();
     private Policy policy;
     private Textbook textbook;
-
+    private OfficeHours officeHours;
+    private String classroomLocation;
 
     public Syllabus (String professorName) {
         this.professorName = professorName.toLowerCase();
@@ -92,7 +93,6 @@ public class Syllabus {
             System.out.println(assignment);
         }
     }
-
 
     public String extractPolicy (Policy policy) {
         return Arrays.toString(policy.getInfo()) + policy.getTitle();
