@@ -5,9 +5,8 @@ import dataContainers.Syllabus;
 import dataContainers.SyllabusEntities;
 import ui.StudentRawInfo;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.regex.Pattern;
 
 public class ChatNLPProcessing {
     // key is professor last name
@@ -29,15 +28,22 @@ public class ChatNLPProcessing {
             return new TodoListResponse(new ArrayList<DatedSyllabusEntities>());
         } else if (intentCategory == PossibleIntents.GENERATE_LIST) {
             return new ListResponse(new ArrayList<SyllabusEntities>());
+        } else if (intentCategory == PossibleIntents.MISC_PARAGRAPH) {
+            return new ParagraphResponse("junk");
         }
         return new ParagraphResponse ("dfs");
     }
 
-
-    private PossibleIntents findGeneralIntent (String input) {
+    private List<String> findProfessors (String input) {
+        return new LinkedList<>();
+    }
+    public PossibleIntents findGeneralIntent(String input) {
+        Pattern datesPattern = Pattern.compile ("date|schedule");
+        if (datesPattern.matcher(input.toLowerCase()).find())
+            return PossibleIntents.SEE_DATES;
         return PossibleIntents.UNKNOWN;
     }
-    public void addSyllabus (String profLastname, Syllabus syllabus) {
-        syllabi.put (profLastname, syllabus);
+    public void addSyllabus (String profName, Syllabus syllabus) {
+        syllabi.put (profName, syllabus);
     }
 }

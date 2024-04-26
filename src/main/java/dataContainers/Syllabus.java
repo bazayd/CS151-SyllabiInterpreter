@@ -1,11 +1,6 @@
 package dataContainers;
 
-import org.ejml.equation.Macro;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class Syllabus {
     private static class ListWithRetainedOrder <T extends Comparable<T>> extends ArrayList<T> {
@@ -19,6 +14,9 @@ public class Syllabus {
             return true;
         }
     }
+    private final String professorName; // in the format 'first.last', lowercase
+        // will be used for .equals() and hashcode()
+
     private List<Assignment> assignments = new ListWithRetainedOrder<>();
     private List<Test> allTests = new ListWithRetainedOrder<>();
     private List<Test> finals = new ListWithRetainedOrder<>();
@@ -27,6 +25,20 @@ public class Syllabus {
     private Policy policy;
     private Textbook textbook;
 
+
+    public Syllabus (String professorName) {
+        this.professorName = professorName.toLowerCase();
+    }
+    @Override
+    public int hashCode () {
+        return professorName.hashCode();
+    }
+    @Override
+    public boolean equals (Object o) {
+        if (!(o instanceof Syllabus))
+            return false;
+        return o.hashCode() == hashCode();
+    }
 
     public void addTest (Test test) {
         if (test == null) {
@@ -42,7 +54,6 @@ public class Syllabus {
         }
         allTests.add(test);
     }
-
     public List<Test> getTests (TestType type) {
         if (type == TestType.FINAL)
             return new ArrayList<>(finals); // just doing this so we don't get errors later
@@ -86,7 +97,6 @@ public class Syllabus {
     public String extractPolicy (Policy policy) {
         return Arrays.toString(policy.getInfo()) + policy.getTitle();
     }
-
     public String textbookRequired(Textbook textbook) {
         return Arrays.toString(textbook.getInfo() )+ textbook.getTitle();
     }

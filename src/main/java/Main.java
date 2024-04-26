@@ -6,10 +6,10 @@ import org.bouncycastle.tsp.TSPUtil;
 
 public class Main {
     public static void main(String[] args) {
-        Syllabus syllabus = new Syllabus();
-        Test test1 = new Test(TestType.MIDTERM);
-        Test test2 = new Test(TestType.FINAL);
-        Test test3 = new Test(TestType.MIDTERM);
+        Syllabus syllabus = new Syllabus("First.Last");
+        Test test1 = new Test(TestType.MIDTERM, "Blank");
+        Test test2 = new Test(TestType.FINAL, "Blank");
+        Test test3 = new Test(TestType.MIDTERM, "Blank");
 
 
 
@@ -17,7 +17,7 @@ public class Main {
         syllabus.addTest(test2);
         syllabus.addTest(test3);
 
-        syllabus.accessTests();
+        syllabus.printAllTests();
 
     }
 }

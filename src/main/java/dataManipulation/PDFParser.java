@@ -9,6 +9,6 @@ public class PDFParser {
 
     public static Syllabus generateSyllabus (PDDocument PDF) {
         // TODO decide return format (tabula creates tables)
-        return new Syllabus();
+        return new Syllabus("First.Last");
     }
 }
