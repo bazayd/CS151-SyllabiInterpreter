@@ -2,7 +2,6 @@ package dataContainers;
 
 public class Textbook implements SyllabusEntities {
     public static void main(String[] args) {
-
     }
 
     public String[] getInfo() {

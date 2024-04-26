@@ -1,6 +1,6 @@
 package dataContainers;
 
-public class Assignment implements SyllabusEntities, Comparable<Assignment> {
+public class Assignment implements DatedSyllabusEntities, Comparable<Assignment> {
     public static void main(String[] args) {
 
     }

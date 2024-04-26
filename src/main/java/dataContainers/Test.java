@@ -2,7 +2,7 @@ package dataContainers;
 
 import java.util.Arrays;
 
-public class Test implements SyllabusEntities, Comparable<Test> {
+public class Test implements DatedSyllabusEntities, Comparable<Test> {
 
     private TestType testType;
     private String title;
