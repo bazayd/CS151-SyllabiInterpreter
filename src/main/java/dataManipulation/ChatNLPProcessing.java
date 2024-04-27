@@ -1,8 +1,7 @@
 package dataManipulation;
-
-import dataContainers.DatedSyllabusEntities;
+import dataContainers.DatedSyllabusEntity;
 import dataContainers.Syllabus;
-import dataContainers.SyllabusEntities;
+import dataContainers.SyllabusEntity;
 import ui.StudentRawInfo;
 
 import java.util.*;
@@ -23,11 +22,11 @@ public class ChatNLPProcessing {
 
         if (intentCategory == PossibleIntents.SEE_DATES) {
             // i know the <..> is redundant but i'm writing it to avoid confusion
-            return new CalendarResponse(new ArrayList<DatedSyllabusEntities>());
+            return new CalendarResponse(new ArrayList<DatedSyllabusEntity>());
         } else if (intentCategory == PossibleIntents.GENERATE_TODO_LIST) {
-            return new TodoListResponse(new ArrayList<DatedSyllabusEntities>());
+            return new TodoListResponse(new ArrayList<DatedSyllabusEntity>());
         } else if (intentCategory == PossibleIntents.GENERATE_LIST) {
-            return new ListResponse(new ArrayList<SyllabusEntities>());
+            return new ListResponse(new ArrayList<SyllabusEntity>());
         } else if (intentCategory == PossibleIntents.MISC_PARAGRAPH) {
             return new ParagraphResponse("junk");
         }

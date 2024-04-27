@@ -3,21 +3,26 @@ package dataContainers;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 
-public class Test implements DatedSyllabusEntities, Comparable<Test> {
+public class Test implements DatedSyllabusEntity, Comparable<Test> {
 
     private TestType testType;
     private String title;
-    private String date; // i'll get rid of this later
-    private LocalDateTime datetime;
+    private String date;
+//    private LocalDateTime datetime;
 
     public Test(TestType testType, String title) {
         this.testType = testType;
         this.title = title;
     }
-    public Test (TestType testType, String title, LocalDateTime datetime) {
+//    public Test (TestType testType, String title, LocalDateTime datetime) {
+//        this.testType = testType;
+//        this.title = title;
+////        this.datetime = datetime;
+//    }
+    public Test (TestType testType, String title, String date) {
         this.testType = testType;
         this.title = title;
-        this.datetime = datetime;
+        this.date = date;
     }
 
     public String[] getInfo() {
@@ -45,7 +50,7 @@ public class Test implements DatedSyllabusEntities, Comparable<Test> {
     }
 
     public String getDueDate() {
-        return null;
+        return date;
     }
 
     public void setDueDate(String date) {
@@ -66,6 +71,7 @@ public class Test implements DatedSyllabusEntities, Comparable<Test> {
     @Override
     public String toString () {
         return "DATE: " + date +
-                "\nTITLE: " + title;
+                "\nTITLE: " + title +
+                "\nTYPE: " + testType;
     }
 }

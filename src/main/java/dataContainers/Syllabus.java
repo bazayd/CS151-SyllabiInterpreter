@@ -92,8 +92,8 @@ public class Syllabus {
             return;
         assignments.add(assignment);
     }
-    public void addDatedSyllabusEntities (List<DatedSyllabusEntities> entities) {
-        for (DatedSyllabusEntities entity: entities) {
+    public void addDatedSyllabusEntities (List<DatedSyllabusEntity> entities) {
+        for (DatedSyllabusEntity entity: entities) {
             if (entity == null)
                 continue;
             if (entity instanceof Test)

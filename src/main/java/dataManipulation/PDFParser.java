@@ -3,10 +3,7 @@ import com.convertapi.client.Config;
 import com.convertapi.client.ConvertApi;
 import com.convertapi.client.Param;
 import customExceptions.BadPDFFormatException;
-import dataContainers.Assignment;
-import dataContainers.DatedSyllabusEntities;
-import dataContainers.OfficeHours;
-import dataContainers.Syllabus;
+import dataContainers.*;
 import org.apache.lucene.search.Sort;
 
 import java.io.FileInputStream;
@@ -116,7 +113,6 @@ public class PDFParser {
 //                    System.out.println (scanner.nextLine());
                     mini += scanner.nextLine() + "\n";
                 }
-                parseCourseSchedule(mini);
                 syllabus.addDatedSyllabusEntities(parseCourseSchedule(mini));
                 syllabus.printAssignments();
                 syllabus.printAllTests();
@@ -125,26 +121,40 @@ public class PDFParser {
         scanner.close();
         return new Syllabus("First Last");
     }
-    public static List<DatedSyllabusEntities> parseCourseSchedule (String input) {
+    public static List<DatedSyllabusEntity> parseCourseSchedule (String input) {
         String[] parts = input.split("(?m)^\\s*$");
 
         System.out.println ("---  parse course schedule");
 //        System.out.println (Arrays.toString(parts));
 //        System.out.println (parts.length);
 
-        List<DatedSyllabusEntities> ans = new LinkedList<>();
+        List<DatedSyllabusEntity> ans = new LinkedList<>();
         for (String part: parts) {
             if (part.isEmpty())
                 continue;
-            ans.add(parseAssignment(part));
+            ans.add(parseSyllabusEntity(part));
         }
         return ans;
     }
-    public static DatedSyllabusEntities parseAssignment (String input) {
-        String[] assignmentdetails = separateDateTime(input);
-        if (assignmentdetails == null)
+    public static DatedSyllabusEntity parseSyllabusEntity (String input) {
+        String[] entitydetails = separateDateTime(input);
+        if (entitydetails == null)
             return null;
-        return new Assignment(assignmentdetails[1].trim(), assignmentdetails[0].trim());
+
+        String title = entitydetails[1].replaceAll("\n", "");
+        String date = entitydetails[0].trim();
+
+        Pattern finalPattern = Pattern.compile(".*\\bfinal\\b.*", Pattern.CASE_INSENSITIVE);
+        Matcher finalMatcher = finalPattern.matcher(title);
+        if (finalMatcher.find()) {
+            return new Test(TestType.FINAL, title, date);
+        }
+        Pattern midtermPattern = Pattern.compile(".*\\bmidterm\\b.*", Pattern.CASE_INSENSITIVE);
+        Matcher midtermMatcher = midtermPattern.matcher(title);
+        if (midtermMatcher.find()) {
+            return new Test(TestType.MIDTERM, title, date);
+        }
+        return new Assignment(title, date);
     }
 
     public static String removeUnwantedStuff(String sentence, String pattern) {
@@ -169,7 +179,6 @@ public class PDFParser {
 //        String dateTimePattern = "\\b((?:\\d{1,2}/\\d{1,2}/\\d{4}|\\d{1,2}/\\d{1,2}|Mon\\. \\d{1,2}, [a-zA-Z]+|January \\d{1,2}, [a-zA-Z]+|February \\d{1,2}, [a-zA-Z]+|March \\d{1,2}, [a-zA-Z]+|April \\d{1,2}, [a-zA-Z]+|May \\d{1,2}, [a-zA-Z]+|June \\d{1,2}, [a-zA-Z]+|July \\d{1,2}, [a-zA-Z]+|August \\d{1,2}, [a-zA-Z]+|September \\d{1,2}, [a-zA-Z]+|October \\d{1,2}, [a-zA-Z]+|November \\d{1,2}, [a-zA-Z]+|December \\d{1,2}, [a-zA-Z]+))\\b";
 
         String dateTimePattern = "\\b((?:\\d{1,2}/\\d{1,2}/\\d{4}|\\d{1,2}/\\d{1,2}|(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\\. \\d{1,2}, [a-zA-Z]+|January \\d{1,2}, [a-zA-Z]+|February \\d{1,2}, [a-zA-Z]+|March \\d{1,2}, [a-zA-Z]+|April \\d{1,2}, [a-zA-Z]+|May \\d{1,2}, [a-zA-Z]+|June \\d{1,2}, [a-zA-Z]+|July \\d{1,2}, [a-zA-Z]+|August \\d{1,2}, [a-zA-Z]+|September \\d{1,2}, [a-zA-Z]+|October \\d{1,2}, [a-zA-Z]+|November \\d{1,2}, [a-zA-Z]+|December \\d{1,2}, [a-zA-Z]+))\\b";
-
         String timePattern = "\\b(\\d{1,2}:\\d{2}\\s(?:AM|PM))\\b";
         String weekPattern = "\\bWeek (\\d{1,2})\\b";
         String dashPattern = " - ";

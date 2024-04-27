@@ -1,16 +1,14 @@
 package dataManipulation;
-
-import dataContainers.DatedSyllabusEntities;
-import dataContainers.SyllabusEntities;
+import dataContainers.DatedSyllabusEntity;
 
 import java.util.List;
 
 public class CalendarResponse implements IntentResponse{
-    List<DatedSyllabusEntities> list;
+    List<DatedSyllabusEntity> list;
     public static void main(String[] args) {
 
     }
-    public CalendarResponse (List<DatedSyllabusEntities> list) {
+    public CalendarResponse (List<DatedSyllabusEntity> list) {
         this.list = list;
     }
 }

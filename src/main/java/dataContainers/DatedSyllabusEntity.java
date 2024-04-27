@@ -1,6 +1,6 @@
 package dataContainers;
 
-public interface DatedSyllabusEntities extends SyllabusEntities {
+public interface DatedSyllabusEntity extends SyllabusEntity {
     String getDueDate();
     void setDueDate(String date);
 }
