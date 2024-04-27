@@ -1,19 +1,19 @@
 package dataContainers;
 
-public class Textbook implements SyllabusEntity {
+public class CourseDescription implements SyllabusEntity {
     String desc;
     public static void main(String[] args) {
-    }
 
-    public Textbook (String desc) {
+    }
+    public CourseDescription (String desc) {
         this.desc = desc;
     }
 
     public String[] getInfo() {
-        return new String[]{desc}; // TODO
+        return new String[]{desc};
     }
 
     public String getTitle() {
-        return desc; // TODO
+        return desc;
     }
 }

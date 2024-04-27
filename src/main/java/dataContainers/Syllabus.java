@@ -3,7 +3,6 @@ package dataContainers;
 import java.util.*;
 
 public class Syllabus {
-
     private static class ListWithRetainedOrder <T extends Comparable<T>> extends ArrayList<T> {
         @Override
         public boolean add (T o) {
@@ -14,6 +13,14 @@ public class Syllabus {
             super.add(index, o);
             return true;
         }
+        @Override
+        public String toString () {
+            String s = "";
+            for (T o: this) {
+                s += o + ", "; // not bothering with the extra comma
+            }
+            return s;
+        }
     }
     private final String professorName; // in the format 'first last', lowercase
         // will be used for .equals() and hashcode()
@@ -23,10 +30,13 @@ public class Syllabus {
     private List<Test> finals = new ListWithRetainedOrder<>();
     private List<Test> midterms = new ListWithRetainedOrder<>();
     private List<Test> quizzes = new ListWithRetainedOrder<>();
-    private Policy policy;
     private Textbook textbook;
     private OfficeHours officeHours;
     private String classroomLocation;
+    private ContactInformation contactInformation;
+    private CourseDescription courseDescription;
+    private ClassroomProtocols classroomProtocols;
+
 
     public Syllabus (String professorName) {
         this.professorName = professorName.toLowerCase();
@@ -123,7 +133,38 @@ public class Syllabus {
     }
 
     public void setOfficeHours(OfficeHours officeHours) {
-        this.officeHours = officeHours;
+        if (officeHours != null)
+            this.officeHours = officeHours;
     }
 
+    public void setContactInformation (ContactInformation contactInformation) {
+        if (contactInformation != null)
+            this.contactInformation = contactInformation;
+    }
+    public void setCourseDescription (CourseDescription courseDescription) {
+        if (courseDescription !=  null)
+            this.courseDescription = courseDescription;
+    }
+    public void setTextbook (Textbook textbook) {
+        if (textbook != null)
+            this.textbook = textbook;
+    }
+    public void setClassroomProtocols (ClassroomProtocols classroomProtocols) {
+        if (classroomProtocols != null)
+            this.classroomProtocols = classroomProtocols;
+    }
+
+    @Override
+    public String toString () {
+        return "PROF: " + professorName +
+                "\n\nFINALS: " + finals +
+                "\n\nMIDTERMS: " + midterms +
+                "\n\nQUIZZES: " + quizzes +
+                "\n\nASSIGNMENTS: " + assignments +
+                "\n\nCONTACT INFO: " + contactInformation +
+                "\n\nOFFICE HOURS: " + officeHours +
+                "\n\nCOURSE DESCRIPTION: " + courseDescription +
+                "\n\nCLASSROOM PROTOCOLS: " + classroomProtocols +
+                "\n\nTEXTBOOK: " + textbook;
+    }
 }

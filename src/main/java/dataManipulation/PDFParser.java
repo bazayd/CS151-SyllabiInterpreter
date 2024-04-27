@@ -16,10 +16,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class PDFParser {
+    private static final Logger logger = Logger.getLogger(PDFParser.class.getName());
 
     public static void main(String[] args) throws IOException, ExecutionException, InterruptedException {
 //            String input = "This is line 1.\n\nThis is line 2.\n\n\nThis is line 3.\n\n";
@@ -56,38 +58,17 @@ public class PDFParser {
 
         //        String[] testsyllabi = {"testsyllabus.pdf", "testsyllabus2.pdf",
 //            "testsyllabus3.pdf"};
-        generateSyllabus("testsyllabus.pdf");
-        generateSyllabus("testsyllabus2.pdf");
-        generateSyllabus("testsyllabus3.pdf");
+        Syllabus s1 = generateSyllabus("testsyllabus.pdf");
+        Syllabus s2 = generateSyllabus("testsyllabus2.pdf");
+        Syllabus s3 = generateSyllabus("testsyllabus3.pdf");
 
-//        String input = "Week 14 04/24/2024 12:00 PM - 1:15 AM Directed graph, Topological Sort ";
-//        separateDateTime(input);
-//        String input2 = "Week 5 04/25/2024 \n12:00 PM CS programming class ";
-//        separateDateTime(input2);
-//        String input3 = "dance class \n05/25/2024 1:00 PM  ";
-//        separateDateTime(input3);
-
-//        for (int i=0; i<testsyllabi.length; i++) {
-//            ClassLoader classLoader = PDFParser.class.getClassLoader();
-//            URL resourceUrl = classLoader.getResource("testresources/" + testsyllabi[i]);
-//            PDDocument doc = null;
-//            try {
-//                doc = PDDocument.load(new File(resourceUrl.toURI()));
-//            } catch (IOException | URISyntaxException e) {
-//                e.printStackTrace();
-//            }
-//            generateSyllabus(doc);
-//
-//            System.out.println ("\n\n ============= \n\n");
-//        }
-//
-//        System.out.println(getRawText("testsyllabus.pdf"));
+        System.out.println (s1);
     }
 
     public static Syllabus generateSyllabus (String filename) throws IOException, ExecutionException, InterruptedException {
         String text = getRawText(filename);
 
-        System.out.println (" ==== PARSED STUFF == =");
+        logger.fine (" ==== PARSED STUFF == =");
         String profName = parseProfName(text);
         if (profName == null)
             throw new BadPDFFormatException("couldn't find prof name");
@@ -101,30 +82,40 @@ public class PDFParser {
         // 2: Course Information, Class time: Instructor, Course Schedule
         // 1: Contact Information, class days/time: course schedule
 
-        String mini = "";
-        Scanner scanner = new Scanner(text);
-        while (scanner.hasNextLine()) {
-            String line = scanner.nextLine();
-            if (line.indexOf("Course Schedule") != -1) {
-                System.out.println ("**** FOUND COURSE SCHED");
-                scanner.nextLine();
-                mini = "";
-                while (scanner.hasNextLine()) {
-//                    System.out.println (scanner.nextLine());
-                    mini += scanner.nextLine() + "\n";
+        String[] sections = text.split("(?i)(?=Contact Information|Course Description|Classroom Protocols|Course Materials|Course Schedule)");
+        for (String section : sections) {
+            String[] lines = section.trim().split("\n", 2);
+            if (lines.length > 0) {
+                switch (lines[0].trim()) {
+                    case "Contact Information":
+                        syllabus.setContactInformation(parseContactInformation(lines.length > 1 ? lines[1] : ""));
+                        break;
+                    case "Course Description":
+                        syllabus.setCourseDescription(parseCourseDescription(lines.length > 1 ? lines[1] : ""));
+                        break;
+                    case "Classroom Protocols":
+                        syllabus.setClassroomProtocols(parseClassroomProtocols(lines.length > 1 ? lines[1] : ""));
+                        break;
+                    case "Course Materials":
+                        syllabus.setTextbook(parseCourseMaterials(lines.length > 1 ? lines[1] : ""));
+                        break;
+                    case "Course Schedule":
+                        syllabus.addDatedSyllabusEntities(parseCourseSchedule(lines.length > 1 ? lines[1] : ""));
+                        break;
+                    default:
+                        parseUnrecognizedSection(lines[0], lines.length > 1 ? lines[1] : "", syllabus);
+                        break;
                 }
-                syllabus.addDatedSyllabusEntities(parseCourseSchedule(mini));
-                syllabus.printAssignments();
-                syllabus.printAllTests();
             }
         }
-        scanner.close();
-        return new Syllabus("First Last");
+
+        return syllabus;
     }
+
     public static List<DatedSyllabusEntity> parseCourseSchedule (String input) {
         String[] parts = input.split("(?m)^\\s*$");
 
-        System.out.println ("---  parse course schedule");
+        logger.fine ("---  parse course schedule");
 //        System.out.println (Arrays.toString(parts));
 //        System.out.println (parts.length);
 
@@ -217,7 +208,7 @@ public class PDFParser {
         Pattern officeHoursPattern = Pattern.compile("(?i)office\\s*hour(s?)\\s*(.+)", Pattern.CASE_INSENSITIVE);
         Matcher officeHoursMatcher = officeHoursPattern.matcher(info);
         if (officeHoursMatcher.find()) {
-            System.out.println("Office Hours: " + officeHoursMatcher.group(2));
+            logger.fine("Office Hours: " + officeHoursMatcher.group(2));
             String rawTextDateAndTime = officeHoursMatcher.group(2);
             return new OfficeHours(rawTextDateAndTime); // TODO format this properly
             // TODO include location and stuff
@@ -229,12 +220,33 @@ public class PDFParser {
         Pattern instructorPattern = Pattern.compile("(?i)instructor\\s*:?\\s*(?:professor\\s*)?(.+)");
         Matcher instructorMatcher = instructorPattern.matcher(info);
         if (instructorMatcher.find()) {
-            System.out.println ("Professor: " + instructorMatcher.group(1));
+            logger.fine ("Professor: " + instructorMatcher.group(1));
             String rawProfName = instructorMatcher.group(1);
             return rawProfName;
         }
         return null;
     }
+
+    private static ClassroomProtocols parseClassroomProtocols(String s) {
+        return new ClassroomProtocols(s); // TODO
+    }
+
+    private static Textbook parseCourseMaterials(String s) {
+        return new Textbook(s); // TODO
+    }
+
+    private static CourseDescription parseCourseDescription(String s) {
+        return new CourseDescription(s); // TODO
+    }
+
+    private static ContactInformation parseContactInformation(String s) {
+        return new ContactInformation(s); // TODO
+    }
+
+    private static void parseUnrecognizedSection(String line, String s, Syllabus syllabus) {
+        // TODO
+    }
+
 
     // TRASHED:
     //    private static LocalDate parseDate(String dateString) {
@@ -265,4 +277,56 @@ public class PDFParser {
     //
     //        return events;
     //    }
+
+        // trashed generateSyllabus
+    //        String mini = "";
+//        Scanner scanner = new Scanner(text);
+//        while (scanner.hasNextLine()) {
+//            String line = scanner.nextLine();
+//            if (line.indexOf("Course Materials") != -1) {
+//                System.out.println ("** FOUND COURSE MATERIALS");
+//                scanner.nextLine();
+//                mini = "";
+//                while (scanner.hasNextLine()) {
+//                    mini += scanner.nextLine() + "\n";
+//                }
+//            }
+//            if (line.indexOf("Course Schedule") != -1) {
+//                System.out.println ("**** FOUND COURSE SCHED");
+//                scanner.nextLine();
+//                mini = "";
+//                while (scanner.hasNextLine()) {
+////                    System.out.println (scanner.nextLine());
+//                    mini += scanner.nextLine() + "\n";
+//                }
+//                syllabus.addDatedSyllabusEntities(parseCourseSchedule(mini));
+//                syllabus.printAssignments();
+//                syllabus.printAllTests();
+//            }
+//        }
+//        scanner.close();
+
+        // trashed main method
+    //        String input = "Week 14 04/24/2024 12:00 PM - 1:15 AM Directed graph, Topological Sort ";
+//        separateDateTime(input);
+//        String input2 = "Week 5 04/25/2024 \n12:00 PM CS programming class ";
+//        separateDateTime(input2);
+//        String input3 = "dance class \n05/25/2024 1:00 PM  ";
+//        separateDateTime(input3);
+
+//        for (int i=0; i<testsyllabi.length; i++) {
+//            ClassLoader classLoader = PDFParser.class.getClassLoader();
+//            URL resourceUrl = classLoader.getResource("testresources/" + testsyllabi[i]);
+//            PDDocument doc = null;
+//            try {
+//                doc = PDDocument.load(new File(resourceUrl.toURI()));
+//            } catch (IOException | URISyntaxException e) {
+//                e.printStackTrace();
+//            }
+//            generateSyllabus(doc);
+//
+//            System.out.println ("\n\n ============= \n\n");
+//        }
+//
+//        System.out.println(getRawText("testsyllabus.pdf"));
 }

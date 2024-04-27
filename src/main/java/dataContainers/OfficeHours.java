@@ -26,4 +26,8 @@ public class OfficeHours implements DatedSyllabusEntity{
     public String getLocation () {
         return "somewhere";
     }
+    @Override
+    public String toString () {
+        return date;
+    }
 }
