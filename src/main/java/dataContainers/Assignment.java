@@ -17,6 +17,11 @@ public class Assignment implements DatedSyllabusEntities, Comparable<Assignment>
         return null;
     }
 
+    @Override
+    public String getDescription() {
+        return "";
+    }
+
     public int compareTo(Assignment o) {
         return 0;
     }

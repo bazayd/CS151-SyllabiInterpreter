@@ -18,6 +18,7 @@ public class ChatNLPProcessing {
 
     public static void main(String[] args) {
 
+
     }
 
     // the method that the other packages classes would be invoking
@@ -27,6 +28,7 @@ public class ChatNLPProcessing {
         if (intentCategory == PossibleIntents.SEE_DATES) {
             // i know the <..> is redundant but i'm writing it to avoid confusion
             return new CalendarResponse(new ArrayList<DatedSyllabusEntities>());
+
         } else if (intentCategory == PossibleIntents.GENERATE_TODO_LIST) {
             return new TodoListResponse(new ArrayList<DatedSyllabusEntities>());
         } else if (intentCategory == PossibleIntents.GENERATE_LIST) {
@@ -42,8 +44,13 @@ public class ChatNLPProcessing {
     }
 
 
+    /*
+    Gets multiple keywords and then sorts through them based on what the user inputs.
+    If user inputs something related to test or exams it will generate the test schedule to show
+    the user all upcoming tests.
+     */
     public PossibleIntents findGeneralIntent(String input) {
-        Pattern datesPattern = Pattern.compile ("date|schedule|test|office hours|textbook|professor|location|grading policy|syllabus overview");
+        Pattern datesPattern = Pattern.compile ("date|schedule|test|exam|midterm|office hours|textbook|professor|location|grading policy|syllabus overview");
         Matcher matcher = datesPattern.matcher(input.toLowerCase());
 
         if (matcher.find()) {
@@ -51,6 +58,10 @@ public class ChatNLPProcessing {
             if (matchedKeyword.contains("date") || matchedKeyword.contains("schedule")) {
                 return PossibleIntents.SEE_DATES;
             } else if (matchedKeyword.contains("test")) {
+                return PossibleIntents.GENERATE_TEST_SCHEDULE;
+            }else if (matchedKeyword.contains("exam")) {
+                return PossibleIntents.GENERATE_TEST_SCHEDULE;
+            }else if (matchedKeyword.contains("midterm")) {
                 return PossibleIntents.GENERATE_TEST_SCHEDULE;
             } else if (matchedKeyword.contains("office hours")) {
                 return PossibleIntents.OFFICE_HOUR_TIMES;
@@ -70,7 +81,27 @@ public class ChatNLPProcessing {
     }
 
 
+    /*
+    *  Following methods allow for adding a Syllabus, getting access to syllabus,
+    * updating Syllabus, and removing syllabus.
+    * */
     public void addSyllabus (String profName, Syllabus syllabus) {
         syllabi.put (profName, syllabus);
+    }
+
+    public Syllabus getSyllabus(String profLastName) {
+        return syllabi.get(profLastName);
+    }
+
+    public void updateSyllabus(String profLastName, Syllabus updatedSyllabus) {
+        if (syllabi.containsKey(profLastName)) {
+            syllabi.put(profLastName, updatedSyllabus);
+        } else {
+            System.out.println("Syllabus for given professor does not exist.");
+        }
+    }
+
+    public void removeSyllabus(String profLastName) {
+        syllabi.remove(profLastName);
     }
 }
