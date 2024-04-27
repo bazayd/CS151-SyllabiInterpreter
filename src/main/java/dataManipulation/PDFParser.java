@@ -24,45 +24,12 @@ public class PDFParser {
     private static final Logger logger = Logger.getLogger(PDFParser.class.getName());
 
     public static void main(String[] args) throws IOException, ExecutionException, InterruptedException {
-//            String input = "This is line 1.\n\nThis is line 2.\n\n\nThis is line 3.\n\n";
-//
-//            String[] parts = input.split("(?m)^\\s*$");
-//            for (String part : parts) {
-//                System.out.println("Part: [" + part + "]");
-//            }
-//
-//            String[] test = {"March 10, Sunday   Daylight saving time starts (2 AM -> 3 AM)\n\n",
-//                    "Apr. 19, Friday   Last day to late drop/withdraw/enrollment",
-//                    "2/22/2222 Blah blah"
-//            };
-//
-//            String sentence = test[2];
-//        String dateTimePattern = "\\b((?:\\d{1,2}/\\d{1,2}/\\d{4}|\\d{1,2}/\\d{1,2}|(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\\. \\d{1,2}, [a-zA-Z]+|January \\d{1,2}, [a-zA-Z]+|February \\d{1,2}, [a-zA-Z]+|March \\d{1,2}, [a-zA-Z]+|April \\d{1,2}, [a-zA-Z]+|May \\d{1,2}, [a-zA-Z]+|June \\d{1,2}, [a-zA-Z]+|July \\d{1,2}, [a-zA-Z]+|August \\d{1,2}, [a-zA-Z]+|September \\d{1,2}, [a-zA-Z]+|October \\d{1,2}, [a-zA-Z]+|November \\d{1,2}, [a-zA-Z]+|December \\d{1,2}, [a-zA-Z]+))\\b";
-//
-//        String timePattern = "\\b(\\d{1,2}:\\d{2}\\s(?:AM|PM))\\b";
-//        String weekPattern = "\\bWeek (\\d{1,2})\\b";
-//        String dashPattern = " - ";
-//
-//        sentence = PDFParser.removeUnwantedStuff(sentence, timePattern);
-//        sentence = PDFParser.removeUnwantedStuff(sentence, weekPattern);
-//        sentence = PDFParser.removeUnwantedStuff(sentence, dashPattern);
-//        System.out.println (sentence);
-//        Pattern pattern = Pattern.compile(dateTimePattern);
-//        Matcher matcher = pattern.matcher(sentence);
-//        if (matcher.find()) {
-//            String date = matcher.group(1);
-//            String restOfSentence = sentence.replaceFirst(dateTimePattern, "");
-//
-//            System.out.println (date + " |||| " + restOfSentence);
-//        }
 
-        //        String[] testsyllabi = {"testsyllabus.pdf", "testsyllabus2.pdf",
-//            "testsyllabus3.pdf"};
         Syllabus s1 = generateSyllabus("testsyllabus.pdf");
         Syllabus s2 = generateSyllabus("testsyllabus2.pdf");
         Syllabus s3 = generateSyllabus("testsyllabus3.pdf");
 
-        System.out.println (s1);
+        System.out.println (s2);
     }
 
     public static Syllabus generateSyllabus (String filename) throws IOException, ExecutionException, InterruptedException {
@@ -82,7 +49,7 @@ public class PDFParser {
         // 2: Course Information, Class time: Instructor, Course Schedule
         // 1: Contact Information, class days/time: course schedule
 
-        String[] sections = text.split("(?i)(?=Contact Information|Course Description|Classroom Protocols|Course Materials|Course Schedule)");
+        String[] sections = text.split("(?i)(?=Contact Information|Course Description|Classroom Protocols|Course Materials|Course Schedule)", Pattern.CASE_INSENSITIVE);
         for (String section : sections) {
             String[] lines = section.trim().split("\n", 2);
             if (lines.length > 0) {
