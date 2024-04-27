@@ -40,6 +40,11 @@ public class Test implements DatedSyllabusEntities, Comparable<Test> {
         return null;
     }
 
+    @Override
+    public String getDescription() {
+        return "";
+    }
+
 //    public void setTestType(TestType testType) {
 //        this.testType = testType;
 //    }

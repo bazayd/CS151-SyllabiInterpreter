@@ -16,10 +16,6 @@ public class ChatNLPProcessing {
     private Map<String, Syllabus> syllabi = new HashMap<>();
     private StudentRawInfo studentRawInfo; // add a listener to this
 
-    public static void main(String[] args) {
-
-
-    }
 
     // the method that the other packages classes would be invoking
     public IntentResponse getIntentResponse (String input) {
@@ -28,15 +24,15 @@ public class ChatNLPProcessing {
         if (intentCategory == PossibleIntents.SEE_DATES) {
             // i know the <..> is redundant but i'm writing it to avoid confusion
             return new CalendarResponse(new ArrayList<DatedSyllabusEntities>());
-
         } else if (intentCategory == PossibleIntents.GENERATE_TODO_LIST) {
             return new TodoListResponse(new ArrayList<DatedSyllabusEntities>());
         } else if (intentCategory == PossibleIntents.GENERATE_LIST) {
             return new ListResponse(new ArrayList<SyllabusEntities>());
-        } else if (intentCategory == PossibleIntents.MISC_PARAGRAPH) {
-            return new ParagraphResponse("junk");
+        }else if (intentCategory == PossibleIntents.RECOMMEND_TEXTBOOK) {
+            return new ParagraphResponse("Textbook");
         }
-        return new ParagraphResponse ("dfs");
+        return new ParagraphResponse("Response");
+
     }
 
     private List<String> findProfessors (String input) {
@@ -50,31 +46,31 @@ public class ChatNLPProcessing {
     the user all upcoming tests.
      */
     public PossibleIntents findGeneralIntent(String input) {
-        Pattern datesPattern = Pattern.compile ("date|schedule|test|exam|midterm|office hours|textbook|professor|location|grading policy|syllabus overview");
-        Matcher matcher = datesPattern.matcher(input.toLowerCase());
+        Pattern keywordsPattern = Pattern.compile("\\b(?:date|schedule|test|exam|midterm|office hours|textbook|professor|location|grading policy|syllabus overview)\\b");
+        Matcher matcher = keywordsPattern.matcher(input.toLowerCase());
 
-        if (matcher.find()) {
+        while (matcher.find()) {
             String matchedKeyword = matcher.group();
-            if (matchedKeyword.contains("date") || matchedKeyword.contains("schedule")) {
-                return PossibleIntents.SEE_DATES;
-            } else if (matchedKeyword.contains("test")) {
-                return PossibleIntents.GENERATE_TEST_SCHEDULE;
-            }else if (matchedKeyword.contains("exam")) {
-                return PossibleIntents.GENERATE_TEST_SCHEDULE;
-            }else if (matchedKeyword.contains("midterm")) {
-                return PossibleIntents.GENERATE_TEST_SCHEDULE;
-            } else if (matchedKeyword.contains("office hours")) {
-                return PossibleIntents.OFFICE_HOUR_TIMES;
-            } else if (matchedKeyword.contains("textbook")) {
-                return PossibleIntents.RECOMMEND_TEXTBOOK;
-            } else if (matchedKeyword.contains("professor")) {
-                return PossibleIntents.GET_PROFESSOR_INFO;
-            } else if (matchedKeyword.contains("location")) {
-                return PossibleIntents.GET_LOCATION;
-            } else if (matchedKeyword.contains("grading policy")) {
-                return PossibleIntents.GET_GRADING_POLICY;
-            } else if (matchedKeyword.contains("syllabus overview")) {
-                return PossibleIntents.SYLLABUS_OVERVIEW;
+            switch (matchedKeyword) {
+                case "date":
+                case "schedule":
+                    return PossibleIntents.SEE_DATES;
+                case "test":
+                case "exam":
+                case "midterm":
+                    return PossibleIntents.GENERATE_TEST_SCHEDULE;
+                case "office hours":
+                    return PossibleIntents.OFFICE_HOUR_TIMES;
+                case "textbook":
+                    return PossibleIntents.RECOMMEND_TEXTBOOK;
+                case "professor":
+                    return PossibleIntents.GET_PROFESSOR_INFO;
+                case "location":
+                    return PossibleIntents.GET_LOCATION;
+                case "grading policy":
+                    return PossibleIntents.GET_GRADING_POLICY;
+                case "syllabus overview":
+                    return PossibleIntents.SYLLABUS_OVERVIEW;
             }
         }
         return PossibleIntents.UNKNOWN;

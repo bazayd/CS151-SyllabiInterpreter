@@ -8,6 +8,12 @@ public class OfficeHours implements DatedSyllabusEntities{
     public String getDueDate() {
         return null;
     }
+
+    @Override
+    public String getDescription() {
+        return "";
+    }
+
     public String[] getInfo() {
         return new String[0];
     }

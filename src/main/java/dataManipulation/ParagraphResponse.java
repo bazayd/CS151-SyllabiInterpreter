@@ -11,4 +11,5 @@ public class ParagraphResponse implements IntentResponse {
     public String generateResponse() {
         return paragraphResponse;
     }
+
 }
