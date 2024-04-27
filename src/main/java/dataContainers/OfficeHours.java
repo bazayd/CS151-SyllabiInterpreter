@@ -1,13 +1,22 @@
 package dataContainers;
 
 public class OfficeHours implements DatedSyllabusEntities{
+    private String date;
     public static void main(String[] args) {
 
     }
+    public OfficeHours (String date) {
+        this.date = date;
+    }
 
     public String getDueDate() {
-        return null;
+        return date;
     }
+
+    public void setDueDate(String date) {
+        this.date = date;
+    }
+
     public String[] getInfo() {
         return new String[0];
     }

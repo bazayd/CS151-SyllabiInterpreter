@@ -12,8 +12,4 @@ public class Policy implements SyllabusEntities {
     public String getTitle() {
         return null;
     }
-
-    public String getDueDate() {
-        return null;
-    }
 }

@@ -2,6 +2,10 @@ package customExceptions;
 
 public class BadPDFFormatException extends IllegalArgumentException {
     public BadPDFFormatException () {
-        super ("bad pdf format. ");
+        this ("");
+    }
+
+    public BadPDFFormatException (String text) {
+        super ("bad pdf format. " + text);
     }
 }

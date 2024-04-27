@@ -11,8 +11,4 @@ public class Textbook implements SyllabusEntities {
     public String getTitle() {
         return null;
     }
-
-    public String getDueDate() {
-        return null;
-    }
 }

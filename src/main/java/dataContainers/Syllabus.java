@@ -3,6 +3,7 @@ package dataContainers;
 import java.util.*;
 
 public class Syllabus {
+
     private static class ListWithRetainedOrder <T extends Comparable<T>> extends ArrayList<T> {
         @Override
         public boolean add (T o) {
@@ -14,7 +15,7 @@ public class Syllabus {
             return true;
         }
     }
-    private final String professorName; // in the format 'first.last', lowercase
+    private final String professorName; // in the format 'first last', lowercase
         // will be used for .equals() and hashcode()
 
     private List<Assignment> assignments = new ListWithRetainedOrder<>();
@@ -39,6 +40,10 @@ public class Syllabus {
         if (!(o instanceof Syllabus))
             return false;
         return o.hashCode() == hashCode();
+    }
+
+    public String getProfName () {
+        return professorName;
     }
 
     public void addTest (Test test) {
@@ -87,6 +92,22 @@ public class Syllabus {
             return;
         assignments.add(assignment);
     }
+    public void addDatedSyllabusEntities (List<DatedSyllabusEntities> entities) {
+        for (DatedSyllabusEntities entity: entities) {
+            if (entity == null)
+                continue;
+            if (entity instanceof Test)
+                addTest((Test) entity);
+            if (entity instanceof Assignment)
+                addAssignment((Assignment) entity);
+        }
+    }
+    public void addAssignments (List<Assignment> assignments) {
+        for (Assignment a: assignments) {
+            if (a != null)
+                this.assignments.add(a);
+        }
+    }
 
     public void printAssignments() {
         for (Assignment assignment : assignments) {
@@ -100,4 +121,9 @@ public class Syllabus {
     public String textbookRequired(Textbook textbook) {
         return Arrays.toString(textbook.getInfo() )+ textbook.getTitle();
     }
+
+    public void setOfficeHours(OfficeHours officeHours) {
+        this.officeHours = officeHours;
+    }
+
 }
