@@ -2,7 +2,7 @@ package dataContainers;
 
 import java.time.LocalDate;
 
-public class Assignment implements DatedSyllabusEntity, Comparable<Assignment> {
+public class Assignment implements DatedSyllabusEntities, Comparable<Assignment> {
     private String date;
     private String title;
 //    private LocalDate date;
@@ -28,6 +28,7 @@ public class Assignment implements DatedSyllabusEntity, Comparable<Assignment> {
         return null;
     }
 
+
     public void setDueDate(String date) {
         this.date = date;
     }
@@ -38,6 +39,11 @@ public class Assignment implements DatedSyllabusEntity, Comparable<Assignment> {
     }
 
     @Override
+    public String getDescription() {
+        return "";
+    }
+
+
     public int compareTo(Assignment o) {
         return 0;
     }

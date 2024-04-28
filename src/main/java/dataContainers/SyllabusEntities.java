@@ -1,6 +1,6 @@
 package dataContainers;
 
-public interface SyllabusEntity {
+public interface SyllabusEntities {
     String[] getInfo();
 
     String getTitle();

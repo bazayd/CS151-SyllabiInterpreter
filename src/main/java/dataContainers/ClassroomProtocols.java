@@ -1,6 +1,6 @@
 package dataContainers;
 
-public class ClassroomProtocols implements SyllabusEntity {
+public class ClassroomProtocols implements SyllabusEntities {
     String text;
     public ClassroomProtocols (String text) {
         this.text = text;

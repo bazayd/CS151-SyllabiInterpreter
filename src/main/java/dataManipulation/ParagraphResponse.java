@@ -1,11 +1,15 @@
 package dataManipulation;
 
 public class ParagraphResponse implements IntentResponse {
-    String message;
-    public static void main(String[] args) {
+    private String paragraphResponse;
 
+    public ParagraphResponse(String paragraphResponse) {
+        this.paragraphResponse = paragraphResponse;
     }
-    public ParagraphResponse (String message) {
-        this.message = message;
+
+    @Override
+    public String generateResponse() {
+        return paragraphResponse;
     }
+
 }
