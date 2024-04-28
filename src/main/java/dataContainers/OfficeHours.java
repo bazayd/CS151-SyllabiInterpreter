@@ -1,6 +1,6 @@
 package dataContainers;
 
-public class OfficeHours implements DatedSyllabusEntities{
+public class OfficeHours implements DatedSyllabusEntity{
     private String date;
     public static void main(String[] args) {
 

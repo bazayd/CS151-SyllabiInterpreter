@@ -1,5 +1,5 @@
 package dataManipulation;
-import dataContainers.DatedSyllabusEntities;
+import dataContainers.DatedSyllabusEntity;
 import dataContainers.Syllabus;
 import dataContainers.SyllabusEntities;
 import ui.StudentRawInfo;
@@ -80,9 +80,9 @@ public class ChatNLPProcessing {
 
 
         if (intentCategory == PossibleIntents.SEE_DATES) {
-            return new CalendarResponse(new ArrayList<DatedSyllabusEntities>());
+            return new CalendarResponse(new ArrayList<DatedSyllabusEntity>());
         } else if (intentCategory == PossibleIntents.GENERATE_TEST_SCHEDULE) {
-            return new CalendarResponse(new ArrayList<DatedSyllabusEntities>());
+            return new CalendarResponse(new ArrayList<DatedSyllabusEntity>());
         } else if (intentCategory == PossibleIntents.OFFICE_HOUR_TIMES) {
             return new ParagraphResponse("Office Hour Times: ... ");
         } else if (intentCategory == PossibleIntents.GET_LOCATION) {

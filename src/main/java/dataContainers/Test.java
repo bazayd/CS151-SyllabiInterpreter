@@ -3,7 +3,7 @@ package dataContainers;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 
-public class Test implements DatedSyllabusEntities, Comparable<Test> {
+public class Test implements DatedSyllabusEntity, Comparable<Test> {
 
     private TestType testType;
     private String title;

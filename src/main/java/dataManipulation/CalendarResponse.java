@@ -1,13 +1,14 @@
 package dataManipulation;
-import dataContainers.DatedSyllabusEntities;
+import dataContainers.DatedSyllabusEntity;
+
 import java.util.List;
 
 public class CalendarResponse implements IntentResponse{
 
-    private List<DatedSyllabusEntities> calendarData;
+    private List<DatedSyllabusEntity> calendarData;
 
 
-    public CalendarResponse(List<DatedSyllabusEntities> calendarData) {
+    public CalendarResponse(List<DatedSyllabusEntity> calendarData) {
         this.calendarData = calendarData;
     }
 
@@ -17,7 +18,7 @@ public class CalendarResponse implements IntentResponse{
         // Generate response text based on calendarData
         StringBuilder responseBuilder = new StringBuilder();
         responseBuilder.append("Calendar Events:\n");
-        for (DatedSyllabusEntities event : calendarData) {
+        for (DatedSyllabusEntity event : calendarData) {
             responseBuilder.append("- ").append(event.getDueDate()).append(": ").append(event.getDescription()).append("\n");
         }
         return responseBuilder.toString();
