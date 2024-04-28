@@ -1,20 +1,16 @@
 package dataManipulation;
+
 import com.convertapi.client.Config;
 import com.convertapi.client.ConvertApi;
 import com.convertapi.client.Param;
 import customExceptions.BadPDFFormatException;
 import dataContainers.*;
-import org.apache.lucene.search.Sort;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.time.format.DateTimeFormatter;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;

@@ -1,8 +1,8 @@
 package dataManipulation;
+
 import dataContainers.DatedSyllabusEntity;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class TodoListResponse implements IntentResponse {
@@ -10,6 +10,7 @@ public class TodoListResponse implements IntentResponse {
     private List<DatedSyllabusEntity> todoListData;
 
     public TodoListResponse(ArrayList<DatedSyllabusEntity> todoListData) {
+
         this.todoListData = todoListData;
     }
 

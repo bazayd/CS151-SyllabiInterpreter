@@ -12,5 +12,6 @@ public enum PossibleIntents {
     GET_GRADING_POLICY,
     SYLLABUS_OVERVIEW,
     OFFICE_HOUR_TIMES,
+    COURSE_DESCRIPTION,
     UNKNOWN
 }
