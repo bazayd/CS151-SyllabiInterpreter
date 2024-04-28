@@ -14,25 +14,98 @@ import java.util.regex.Pattern;
 public class ChatNLPProcessing {
     // key is professor last name
     private Map<String, Syllabus> syllabi = new HashMap<>();
-    private StudentRawInfo studentRawInfo; // add a listener to this
+    private StudentRawInfo studentRawInfo; // add a listener to th
 
+    public static void main(String[] args) {
+
+        ChatNLPProcessing chatBot = new ChatNLPProcessing();
+
+        Syllabus syllabus = new Syllabus("prof");
+
+        chatBot.addSyllabus("prof",syllabus);
+
+
+        Syllabus retrieved = new Syllabus("prof");
+        if (retrieved != null) {
+            System.out.println("Syllabus retrieved successfully");
+        }else {
+            System.out.println("Syllabus not found for following name.");
+        }
+
+        Syllabus updatedSyllabus = new Syllabus("professor1");
+        // Add updated assignments, tests, etc. if needed
+        chatBot.updateSyllabus("prof1", updatedSyllabus);
+        // Verify that the syllabus has been updated by retrieving it again and comparing with the updated version
+
+        // Test removing the syllabus
+        chatBot.removeSyllabus("prof1");
+        // Verify that the syllabus has been removed by attempting to retrieve it again
+        Syllabus removedSyllabus = chatBot.getSyllabus("prof1");
+        if (removedSyllabus == null) {
+            System.out.println("Syllabus successfully removed for professor prof1.");
+        } else {
+            System.out.println("Failed to remove syllabus for professor prof1.");
+        }
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Speak to chat bot (x to quit): ");
+
+        while (scanner.hasNext()) {
+            String userInput = scanner.next();
+
+
+            if (userInput.equals("x")) {
+                break;
+            }
+
+            IntentResponse response = chatBot.getIntentResponse(userInput);
+
+            if (response instanceof ParagraphResponse) {
+                System.out.println(((ParagraphResponse) response).generateResponse());
+            } else if (response instanceof CalendarResponse) {
+                System.out.println(((CalendarResponse) response).generateResponse());
+            } else if (response instanceof TodoListResponse) {
+                System.out.println(((TodoListResponse) response).generateResponse());
+            } else if (response instanceof ListResponse) {
+                System.out.println(((ListResponse) response).generateResponse());
+            } else {
+                System.out.println("Other response..");
+            }
+
+            System.out.println("Speak to chat bot (x to quit): ");
+
+        }
+
+    }
 
     // the method that the other packages classes would be invoking
     public IntentResponse getIntentResponse (String input) {
         PossibleIntents intentCategory = findGeneralIntent(input);
 
-        if (intentCategory == PossibleIntents.SEE_DATES) {
-            // i know the <..> is redundant but i'm writing it to avoid confusion
-            return new CalendarResponse(new ArrayList<DatedSyllabusEntities>());
-        } else if (intentCategory == PossibleIntents.GENERATE_TODO_LIST) {
-            return new TodoListResponse(new ArrayList<DatedSyllabusEntities>());
-        } else if (intentCategory == PossibleIntents.GENERATE_LIST) {
-            return new ListResponse(new ArrayList<SyllabusEntities>());
-        }else if (intentCategory == PossibleIntents.RECOMMEND_TEXTBOOK) {
-            return new ParagraphResponse("Textbook");
-        }
-        return new ParagraphResponse("Response");
 
+        if (intentCategory == PossibleIntents.SEE_DATES) {
+            return new CalendarResponse(new ArrayList<DatedSyllabusEntities>());
+        } else if (intentCategory == PossibleIntents.GENERATE_TEST_SCHEDULE) {
+            return new CalendarResponse(new ArrayList<DatedSyllabusEntities>());
+        } else if (intentCategory == PossibleIntents.OFFICE_HOUR_TIMES) {
+            return new ParagraphResponse("Office Hour Times: ... ");
+        } else if (intentCategory == PossibleIntents.GET_LOCATION) {
+            return new ParagraphResponse("Classroom Location: ");
+        } else if (intentCategory == PossibleIntents.GET_GRADING_POLICY) {
+            /*
+            return list of grading policies
+            (Ex: - Homeworking Grade 20%, - Midterms 25% each, - Final 30%)
+             */
+            return new ListResponse(new ArrayList<SyllabusEntities>());
+        } else if (intentCategory == PossibleIntents.RECOMMEND_TEXTBOOK) {
+            // Returns recommended Textbook/s from extracted syllabus
+            return new ParagraphResponse("Recommended Textbook: ");
+        } else if (intentCategory == PossibleIntents.SYLLABUS_OVERVIEW) {
+            // returns list of important syllabus information
+            return new ListResponse(new ArrayList<SyllabusEntities>());
+        }
+
+        return null;
     }
 
     private List<String> findProfessors (String input) {
