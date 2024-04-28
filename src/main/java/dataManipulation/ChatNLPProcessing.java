@@ -1,7 +1,7 @@
 package dataManipulation;
 import dataContainers.DatedSyllabusEntity;
 import dataContainers.Syllabus;
-import dataContainers.SyllabusEntities;
+import dataContainers.SyllabusEntity;
 import ui.StudentRawInfo;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -92,13 +92,13 @@ public class ChatNLPProcessing {
             return list of grading policies
             (Ex: - Homeworking Grade 20%, - Midterms 25% each, - Final 30%)
              */
-            return new ListResponse(new ArrayList<SyllabusEntities>());
+            return new ListResponse(new ArrayList<SyllabusEntity>());
         } else if (intentCategory == PossibleIntents.RECOMMEND_TEXTBOOK) {
             // Returns recommended Textbook/s from extracted syllabus
             return new ParagraphResponse("Recommended Textbook: ");
         } else if (intentCategory == PossibleIntents.SYLLABUS_OVERVIEW) {
             // returns list of important syllabus information
-            return new ListResponse(new ArrayList<SyllabusEntities>());
+            return new ListResponse(new ArrayList<SyllabusEntity>());
 
         }
 

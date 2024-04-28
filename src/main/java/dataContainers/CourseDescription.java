@@ -1,6 +1,6 @@
 package dataContainers;
 
-public class CourseDescription implements SyllabusEntities {
+public class CourseDescription implements SyllabusEntity {
     String desc;
     public static void main(String[] args) {
 

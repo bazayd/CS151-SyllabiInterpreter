@@ -1,6 +1,6 @@
 package dataContainers;
 
-public class Policy implements SyllabusEntities {
+public class Policy implements SyllabusEntity {
     public static void main(String[] args) {
 
     }

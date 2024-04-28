@@ -1,6 +1,6 @@
 package dataContainers;
 
-public class ContactInformation implements SyllabusEntities {
+public class ContactInformation implements SyllabusEntity {
     private String desc;
     public static void main(String[] args) {
 
