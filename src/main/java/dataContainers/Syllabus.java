@@ -157,6 +157,78 @@ public class Syllabus {
             this.classroomProtocols = classroomProtocols;
     }
 
+    public List<Assignment> getAssignments() {
+        return assignments;
+    }
+
+    public void setAssignments(List<Assignment> assignments) {
+        this.assignments = assignments;
+    }
+
+    public List<Test> getAllTests() {
+        return allTests;
+    }
+
+    public void setAllTests(List<Test> allTests) {
+        this.allTests = allTests;
+    }
+
+    public List<Test> getFinals() {
+        return finals;
+    }
+
+    public void setFinals(List<Test> finals) {
+        this.finals = finals;
+    }
+
+    public List<Test> getMidterms() {
+        return midterms;
+    }
+
+    public void setMidterms(List<Test> midterms) {
+        this.midterms = midterms;
+    }
+
+    public List<Test> getQuizzes() {
+        return quizzes;
+    }
+
+    public void setQuizzes(List<Test> quizzes) {
+        this.quizzes = quizzes;
+    }
+
+    public Textbook getTextbook() {
+        return textbook;
+    }
+
+    public String getClassroomLocation() {
+        return classroomLocation;
+    }
+
+    public void setClassroomLocation(String classroomLocation) {
+        this.classroomLocation = classroomLocation;
+    }
+
+    public ContactInformation getContactInformation() {
+        return contactInformation;
+    }
+
+    public CourseDescription getCourseDescription() {
+        return courseDescription;
+    }
+
+    public ClassroomProtocols getClassroomProtocols() {
+        return classroomProtocols;
+    }
+
+    public String getProfessorName() {
+        return professorName;
+    }
+
+    public OfficeHours getOfficeHours() {
+        return officeHours;
+    }
+
     @Override
     public String toString () {
         return "PROF: " + professorName +
