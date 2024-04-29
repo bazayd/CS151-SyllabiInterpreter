@@ -1,5 +1,6 @@
 package dataManipulation;
 
+import dataContainers.DatedSyllabusEntity;
 import dataContainers.Syllabus;
 
 import dataContainers.SyllabusEntity;
@@ -95,7 +96,7 @@ public class ChatNLPProcessing {
 //        System.out.println("Detected intent category: " + intentCategory);
 
         return switch (intentCategory) {
-            case SEE_DATES, GENERATE_TEST_SCHEDULE -> new CalendarResponse(new ArrayList<>());
+            case GENERATE_TEST_SCHEDULE -> new CalendarResponse(new ArrayList<>());
             case OFFICE_HOUR_TIMES -> new ParagraphResponse("Office Hour Times: ... ");
             case GET_LOCATION -> new ParagraphResponse("Classroom Location: ");
             case GET_GRADING_POLICY, SYLLABUS_OVERVIEW -> new ListResponse(new ArrayList<>());
@@ -110,6 +111,15 @@ public class ChatNLPProcessing {
             case COURSE_DESCRIPTION -> {
                 String courseDesc = String.join(" ", syllabus.getCourseDescription().getInfo());
                 yield new ParagraphResponse(courseDesc);
+            }
+            case CLASSROOM_PROTOCOL ->  {
+                String protocol = String.join(" ", syllabus.getClassroomProtocols().getInfo());
+                yield new ParagraphResponse(protocol);
+            }
+            case SEE_DATES ->  {
+                List<DatedSyllabusEntity> classSchedule = syllabus.getDatedSyllabusEntites();
+
+                yield new CalendarResponse(classSchedule);
             }
             default -> null; // Handle unknown intent
         };
@@ -140,8 +150,9 @@ public class ChatNLPProcessing {
             return PossibleIntents.SYLLABUS_OVERVIEW;
         }else if (keywords.contains("description")) {
             return PossibleIntents.COURSE_DESCRIPTION;
-        }
-        else {
+        }else if (keywords.contains("protocol") || keywords.contains("protocols")) {
+            return PossibleIntents.CLASSROOM_PROTOCOL;
+        } else {
             return PossibleIntents.UNKNOWN;
         }
     }

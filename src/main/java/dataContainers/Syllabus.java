@@ -115,6 +115,18 @@ public class Syllabus {
                 addAssignment((Assignment) entity);
         }
     }
+
+    public List<DatedSyllabusEntity> getDatedSyllabusEntites() {
+        List<DatedSyllabusEntity> allDatedEntities = new ArrayList<>();
+
+        // Add all assignments to the list of dated entities
+        allDatedEntities.addAll(assignments);
+
+        // Add all tests (including finals, midterms, and quizzes) to the list of dated entities
+        allDatedEntities.addAll(allTests);
+
+        return allDatedEntities;
+    }
     public void addAssignments (List<Assignment> assignments) {
         for (Assignment a: assignments) {
             if (a != null)

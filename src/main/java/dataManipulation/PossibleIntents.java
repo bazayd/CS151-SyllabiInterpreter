@@ -13,5 +13,6 @@ public enum PossibleIntents {
     SYLLABUS_OVERVIEW,
     OFFICE_HOUR_TIMES,
     COURSE_DESCRIPTION,
+    CLASSROOM_PROTOCOL,
     UNKNOWN
 }
