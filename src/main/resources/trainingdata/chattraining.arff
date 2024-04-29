@@ -1,0 +1,11 @@
+@relation IntentTrainingData
+
+@attribute message string
+@attribute intent {SEE_DATES, GENERATE_TODO_LIST, GENERATE_LIST, MISC_PARAGRAPH, GENERATE_TEST_SCHEDULE, RECOMMEND_TEXTBOOK, 
+GET_PROFESSOR_INFO, GET_LOCATION, GET_GRADING_POLICY, SYLLABUS_OVERVIEW, OFFICE_HOUR_TIMES, UNKNOWN}
+
+@data
+"When are the exams?", SEE_DATES
+"Generate my to-do list", GENERATE_TODO_LIST
+"What's the professor's office hours?", OFFICE_HOUR_TIMES
+
