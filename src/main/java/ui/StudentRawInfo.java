@@ -1,10 +1,5 @@
-package ui;
-import customExceptions.BadPDFFormatException;
-import org.apache.pdfbox.pdmodel.PDDocument;
-
-import java.util.LinkedList;
-import java.util.List;
-
+package main.java.ui;
+/*
 public class StudentRawInfo {
     private List<PDDocument> pdfs = new LinkedList<>();
 
@@ -17,3 +12,5 @@ public class StudentRawInfo {
         return pdf != null;
     }
 }
+
+ */
