@@ -1,27 +1,13 @@
 package dataContainers;
 
 public class OfficeHours implements DatedSyllabusEntity{
-    private String date;
     public static void main(String[] args) {
 
     }
-    public OfficeHours (String date) {
-        this.date = date;
-    }
 
     public String getDueDate() {
-        return date;
+        return null;
     }
-
-
-    public void setDueDate(String date) {
-        this.date = date;
-    }
-    @Override
-    public String getDescription() {
-        return "";
-    }
-
     public String[] getInfo() {
         return new String[0];
     }
@@ -30,9 +16,5 @@ public class OfficeHours implements DatedSyllabusEntity{
     }
     public String getLocation () {
         return "somewhere";
-    }
-    @Override
-    public String toString () {
-        return date;
     }
 }

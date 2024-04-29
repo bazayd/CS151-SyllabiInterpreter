@@ -1,7 +1,7 @@
 package dataContainers;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
+import java.time.ZonedDateTime;
 
 public class Test implements DatedSyllabusEntity, Comparable<Test> {
 
@@ -49,7 +49,7 @@ public class Test implements DatedSyllabusEntity, Comparable<Test> {
         }
     }
 
-    public String getDueDate() {
+    public ZonedDateTime getDueDate() {
         return date;
     }
 

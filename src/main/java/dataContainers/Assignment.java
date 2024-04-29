@@ -1,19 +1,8 @@
 package dataContainers;
 
-import java.time.LocalDate;
-
 public class Assignment implements DatedSyllabusEntity, Comparable<Assignment> {
-    private String date;
-    private String title;
-//    private LocalDate date;
-
     public static void main(String[] args) {
 
-    }
-
-    public Assignment (String title, String date) {
-        this.title = title;
-        this.date = date;
     }
 
     public String[] getInfo() {
@@ -28,21 +17,6 @@ public class Assignment implements DatedSyllabusEntity, Comparable<Assignment> {
         return null;
     }
 
-    public void setDueDate(String date) {
-        this.date = date;
-    }
-
-    public String getDescription() {
-        return null;
-    }
-
-    @Override
-    public String toString () {
-        return "DATE: " + date  +
-                "\nTITLE: " + title;
-    }
-
-    @Override
     public int compareTo(Assignment o) {
         return 0;
     }

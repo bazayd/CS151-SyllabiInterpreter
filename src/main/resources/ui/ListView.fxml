@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.ListViewController">
+    <children>
+        <ListView fx:id="listView" layoutY="50.0" prefHeight="650.0" prefWidth="1200.0" />
+        <TextField fx:id="textField" alignment="CENTER" layoutX="350.0" layoutY="20.0" minWidth="500.0" onKeyReleased="#search" promptText="Search Syllabus" />
+    </children>
+</AnchorPane>
