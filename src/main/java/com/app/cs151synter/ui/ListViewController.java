@@ -1,5 +1,6 @@
 package com.app.cs151synter.ui;
 
+import com.app.cs151synter.dataContainers.Assignment;
 import com.app.cs151synter.dataContainers.DatedSyllabusEntity;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -10,10 +11,7 @@ import javafx.scene.control.TextField;
 
 import java.net.URL;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class ListViewController implements Initializable {
     @FXML
@@ -23,6 +21,15 @@ public class ListViewController implements Initializable {
     List<DatedSyllabusEntity> DatedSyllabusEntities;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        //testing example
+        List<DatedSyllabusEntity> a = new ArrayList<DatedSyllabusEntity>();
+        Calendar c = Calendar.getInstance();
+        c.set(5,26,2024);
+        for(int i = 0; i < 50; i++) {
+            a.add(new Assignment("fart", c));
+        }
+        setDatedSyllabusEntities(a);
+        //end of testing example
         listView.getItems().addAll(DatedSyllabusEntities);
         listView.setOnMouseClicked(event -> {
             DatedSyllabusEntity b = listView.getSelectionModel().getSelectedItem();

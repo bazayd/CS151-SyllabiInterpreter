@@ -21,7 +21,7 @@ public class Assignment implements DatedSyllabusEntity, Comparable<Assignment> {
     }
 
     public String getTitle() {
-        return "a";
+        return title;
     }
 
     public Calendar getDueDate() {
