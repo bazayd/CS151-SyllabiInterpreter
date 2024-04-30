@@ -1,8 +1,10 @@
 package com.app.cs151synter.dataContainers;
 
+import java.util.Calendar;
+
 public interface DatedSyllabusEntity extends SyllabusEntity {
-    String getDueDate();
-    void setDueDate(String date);
+    Calendar getDueDate();
+    void setDueDate(Calendar date);
     String getDescription();
 
 }
