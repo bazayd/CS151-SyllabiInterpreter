@@ -44,7 +44,7 @@ public class PDFParser {
         // 2: Course Information, Class time: Instructor, Course Schedule
         // 1: Contact Information, class days/time: course schedule
 
-        String[] sections = text.split("(?i)(?=Contact Information|Course Description|Classroom Protocols|Course Materials|Course Schedule)");
+        String[] sections = text.split("(?i)(?=Contact Information|Course Description|Classroom Protocols|Course Materials|Course Schedule| Office Hours)");
         for (String section : sections) {
             String[] lines = section.trim().split("\n", 2);
             if (lines.length > 0) {
@@ -64,6 +64,8 @@ public class PDFParser {
                     case "Course Schedule":
                         syllabus.addDatedSyllabusEntities(parseCourseSchedule(lines.length > 1 ? lines[1] : ""));
                         break;
+                    case "Office Hours":
+                        syllabus.setOfficeHours(parseOfficeHours(lines.length > 1 ? lines[1] : ""));
                     default:
                         parseUnrecognizedSection(lines[0], lines.length > 1 ? lines[1] : "", syllabus);
                         break;
@@ -167,7 +169,7 @@ public class PDFParser {
     }
 
     private static OfficeHours parseOfficeHours(String info) {
-        Pattern officeHoursPattern = Pattern.compile("(?i)office\\s*hour(s?)\\s*(.+)", Pattern.CASE_INSENSITIVE);
+        Pattern officeHoursPattern = Pattern.compile("(?i)Office\\s*Hour(s?)\\s*(.+)", Pattern.CASE_INSENSITIVE);
         Matcher officeHoursMatcher = officeHoursPattern.matcher(info);
         if (officeHoursMatcher.find()) {
             logger.fine("Office Hours: " + officeHoursMatcher.group(2));

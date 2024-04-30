@@ -13,6 +13,7 @@ import ui.StudentRawInfo;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 
 public class ChatNLPProcessing {
     // key is professor last name
@@ -35,28 +36,32 @@ public class ChatNLPProcessing {
 
 
         Scanner scanner = new Scanner(System.in);
+        String userInput;
+
         System.out.println("Speak to chat bot (x to quit): ");
 
-        while (scanner.hasNext()) {
-            String userInput = scanner.next();
+        while (!(userInput = scanner.nextLine()).equals("x")) {
 
-            if (userInput.equals("x")) {
-                break;
-            }
 
             IntentResponse response = chatBot.getIntentResponse(userInput, syllabus);
 
-            if (response instanceof ParagraphResponse) {
-                System.out.println(((ParagraphResponse) response).generateResponse());
-            } else if (response instanceof CalendarResponse) {
-                System.out.println(((CalendarResponse) response).generateResponse());
-            } else if (response instanceof TodoListResponse) {
-                System.out.println(((TodoListResponse) response).generateResponse());
-            } else if (response instanceof ListResponse) {
-                System.out.println(((ListResponse) response).generateResponse());
+            if (response != null) {
+                System.out.println(response.generateResponse());
             } else {
-                System.out.println("Other response..");
+                System.out.println("Sorry, I didn't understand your question.");
             }
+
+//            if (response instanceof ParagraphResponse) {
+//                System.out.println(((ParagraphResponse) response).generateResponse());
+//            } else if (response instanceof CalendarResponse) {
+//                System.out.println(((CalendarResponse) response).generateResponse());
+//            } else if (response instanceof TodoListResponse) {
+//                System.out.println(((TodoListResponse) response).generateResponse());
+//            } else if (response instanceof ListResponse) {
+//                System.out.println(((ListResponse) response).generateResponse());
+//            } else {
+//                System.out.println("");
+//            }
 
             System.out.println("Speak to chat bot (x to quit): ");
         }
@@ -71,14 +76,14 @@ public class ChatNLPProcessing {
         Annotation doc = new Annotation(input);
         pipeline.annotate(doc);
 
-        List<String> keywords = new ArrayList<>();
-        for (CoreLabel token : doc.get(CoreAnnotations.TokensAnnotation.class)) {
-            String word = token.get(CoreAnnotations.TextAnnotation.class);
-            String pos = token.get(CoreAnnotations.PartOfSpeechAnnotation.class);
-            if (pos.startsWith("NN") || pos.startsWith("VB") || pos.startsWith("JJ") || pos.startsWith("RB")) {
-                keywords.add(word.toLowerCase());
-            }
-        }
+        Set<String> stopwords = new HashSet<>(Arrays.asList("\"a\", \"an\", \"the\", \"i\", \"you\", \"can\", \"have\", \"etc...\""));
+
+        List<String> keywords = doc.get(CoreAnnotations.TokensAnnotation.class)
+                .stream()
+                .filter(token -> !stopwords.contains(token.get(CoreAnnotations.TextAnnotation.class).toLowerCase()))
+                .map(token -> token.get(CoreAnnotations.TextAnnotation.class).toLowerCase())
+                .collect(Collectors.toList());
+
         return keywords;
     }
 
@@ -97,7 +102,6 @@ public class ChatNLPProcessing {
 
         return switch (intentCategory) {
             case GENERATE_TEST_SCHEDULE -> new CalendarResponse(new ArrayList<>());
-            case OFFICE_HOUR_TIMES -> new ParagraphResponse("Office Hour Times: ... ");
             case GET_LOCATION -> new ParagraphResponse("Classroom Location: ");
             case GET_GRADING_POLICY, SYLLABUS_OVERVIEW -> new ListResponse(new ArrayList<>());
             case RECOMMEND_TEXTBOOK -> {
@@ -121,6 +125,10 @@ public class ChatNLPProcessing {
 
                 yield new CalendarResponse(classSchedule);
             }
+            case OFFICE_HOUR_TIMES ->  {
+                String officeHours = String.join(" ", syllabus.getOfficeHours().toString());
+                yield new ParagraphResponse("Office Hours are on: " + officeHours);
+            }
             default -> null; // Handle unknown intent
         };
     }
@@ -136,11 +144,11 @@ public class ChatNLPProcessing {
             return PossibleIntents.SEE_DATES;
         } else if (keywords.contains("test") || keywords.contains("exam") || keywords.contains("midterm")) {
             return PossibleIntents.GENERATE_TEST_SCHEDULE;
-        } else if (keywords.contains("office hours")) {
+        } else if (keywords.contains("office")) {
             return PossibleIntents.OFFICE_HOUR_TIMES;
         } else if (keywords.contains("textbook") || keywords.contains("materials")) {
             return PossibleIntents.RECOMMEND_TEXTBOOK;
-        } else if (keywords.contains("professor") || keywords.contains("contact")) {
+        } else if (keywords.contains("professor") || keywords.contains("contact info") || keywords.contains("instructor")) {
             return PossibleIntents.GET_PROFESSOR_INFO;
         } else if (keywords.contains("location")) {
             return PossibleIntents.GET_LOCATION;
@@ -150,13 +158,12 @@ public class ChatNLPProcessing {
             return PossibleIntents.SYLLABUS_OVERVIEW;
         }else if (keywords.contains("description")) {
             return PossibleIntents.COURSE_DESCRIPTION;
-        }else if (keywords.contains("protocol") || keywords.contains("protocols")) {
+        }else if (keywords.contains("protocol") || keywords.contains("protocols") || keywords.contains("rules")) {
             return PossibleIntents.CLASSROOM_PROTOCOL;
         } else {
             return PossibleIntents.UNKNOWN;
         }
     }
-
 
     /*
     *  Following methods allow for adding a Syllabus, getting access to syllabus,
