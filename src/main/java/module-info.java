@@ -8,6 +8,7 @@ module com.app.cs151synter {
     requires convertapi;
     requires pdfbox;
 
-    opens com.app.cs151synter to javafx.fxml;
-    exports com.app.cs151synter;
+    opens com.app.cs151synter to javafx.fxml, javafx.graphics;
+    opens com.app.cs151synter.ui to javafx.fxml, javafx.graphics;
+//    exports com.app.cs151synter to javafx.fxml, javafx.graphics;
 }
