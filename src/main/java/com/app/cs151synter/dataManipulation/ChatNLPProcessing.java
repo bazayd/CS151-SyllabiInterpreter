@@ -1,5 +1,6 @@
 package com.app.cs151synter.dataManipulation;
 
+import com.app.cs151synter.dataContainers.DatedSyllabusEntity;
 import com.app.cs151synter.dataContainers.Syllabus;
 import com.app.cs151synter.ui.StudentRawInfo;
 import edu.stanford.nlp.ling.CoreAnnotations;
@@ -90,9 +91,39 @@ public class ChatNLPProcessing {
 
         PossibleIntents intentCategory = findGeneralIntent(keywords);
 
+//        return null;
+        System.out.println("Detected intent category: " + intentCategory);
+
+        // SORRY ABOUT THIS DUDE I JUST COULDN'T FIGURE IT OUT
+        switch (intentCategory) {
+            case GENERATE_TEST_SCHEDULE -> new CalendarResponse(new ArrayList<>());
+            case OFFICE_HOUR_TIMES -> new ParagraphResponse("Office Hour Times: ... ");
+            case GET_LOCATION -> new ParagraphResponse("Classroom Location: ");
+            case GET_GRADING_POLICY, SYLLABUS_OVERVIEW -> new ListResponse(new ArrayList<>());
+            case RECOMMEND_TEXTBOOK -> {
+                String materials = String.join(" ", syllabus.getTextbook().getInfo());
+                return new ParagraphResponse(materials);
+            }
+            case GET_PROFESSOR_INFO ->  {
+                String contactInfo = String.join(" ", syllabus.getContactInformation().getInfo());
+                return new ParagraphResponse(contactInfo);
+            }
+            case COURSE_DESCRIPTION -> {
+                String courseDesc = String.join(" ", syllabus.getCourseDescription().getInfo());
+                return new ParagraphResponse(courseDesc);
+            }
+            case CLASSROOM_PROTOCOL ->  {
+                String protocol = String.join(" ", syllabus.getClassroomProtocols().getInfo());
+                return new ParagraphResponse(protocol);
+            }
+            case SEE_DATES ->  {
+                List<DatedSyllabusEntity> classSchedule = syllabus.getDatedSyllabusEntites();
+
+                return new CalendarResponse(classSchedule);
+            }
+            // Handle unknown intent
+        }
         return null;
-//        System.out.println("Detected intent category: " + intentCategory);
-//
 //        return switch (intentCategory) {
 //            case GENERATE_TEST_SCHEDULE -> new CalendarResponse(new ArrayList<>());
 //            case OFFICE_HOUR_TIMES -> new ParagraphResponse("Office Hour Times: ... ");
@@ -100,7 +131,7 @@ public class ChatNLPProcessing {
 //            case GET_GRADING_POLICY, SYLLABUS_OVERVIEW -> new ListResponse(new ArrayList<>());
 //            case RECOMMEND_TEXTBOOK -> {
 //                String materials = String.join(" ", syllabus.getTextbook().getInfo());
-//                yield new ParagraphResponse(materials);
+//                return new ParagraphResponse(materials);
 //            }
 //            case GET_PROFESSOR_INFO ->  {
 //                String contactInfo = String.join(" ", syllabus.getContactInformation().getInfo());
@@ -121,7 +152,6 @@ public class ChatNLPProcessing {
 //            }
 //            default -> null; // Handle unknown intent
 //        };
-        // TODO UNCOMMENT AND GET IT WORKING
     }
 
     private List<String> findProfessors (String input) {
