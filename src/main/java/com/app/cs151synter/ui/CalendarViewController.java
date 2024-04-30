@@ -16,6 +16,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 import java.net.URL;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.*;
 
@@ -119,29 +120,31 @@ public class CalendarViewController implements ViewController {
         for (int k = 0; k < datedSyllabusEntities.size(); k++) {
             //figure out how to actually show the items on the dates
             DatedSyllabusEntity currActivity = DatedSyllabusEntities.get(k);
+            ZonedDateTime currActivityDate = ZonedDateTime.ofInstant(currActivity.getDueDate().toInstant(), ZoneId.systemDefault());
             if(k >= 2) {
                 Text moreActivities = new Text("Click for more detail...");
                 calendarActivityBlock.getChildren().add(moreActivities);
                 moreActivities.setOnMouseClicked(mouseEvent -> {
                     String text = "";
                     for(DatedSyllabusEntity calendarActivity : DatedSyllabusEntities){
-                        //text += calendarActivity.getTitle() + ", " + calendarActivity.getDueDate().toLocalTime() + "\n" + calendarActivity.getDescription() + "\n";
+                        ZonedDateTime calendarActivityDate = ZonedDateTime.ofInstant(calendarActivity.getDueDate().toInstant(), ZoneId.systemDefault());
+                        text += calendarActivity.getTitle() + ", " + calendarActivityDate.toLocalTime() + "\n" + calendarActivity.getDescription() + "\n";
                     }
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Info");
-                    alert.setHeaderText("Information on  ");// + currActivity.getDueDate().getMonth().getValue() + "/" + currActivity.getDueDate().getDayOfMonth() + "/" + currActivity.getDueDate().getYear());
+                    alert.setHeaderText("Information on " + currActivityDate.getMonth().getValue() + "/" + currActivityDate.getDayOfMonth() + "/" + currActivityDate.getYear());
                     alert.setContentText(text);
                     alert.showAndWait();
                 });
                 break;
             }
-            Text text = new Text(DatedSyllabusEntities.get(k).getTitle()); //+ ", " + DatedSyllabusEntities.get(k).getDueDate().toLocalTime());
+            Text text = new Text(DatedSyllabusEntities.get(k).getTitle() + ", " + currActivityDate.toLocalTime());
             calendarActivityBlock.getChildren().add(text);
             text.setOnMouseClicked(mouseEvent -> {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Info");
-                //alert.setHeaderText("Information on  " + currActivity.getDueDate().getMonth().getValue() + "/" + currActivity.getDueDate().getDayOfMonth() + "/" + currActivity.getDueDate().getYear());
-                //alert.setContentText(currActivity.getTitle() + ", " + currActivity.getDueDate().toLocalTime() + "\n" + currActivity.getDescription());
+                alert.setHeaderText("Information on  " + currActivityDate.getMonth().getValue() + "/" + currActivityDate.getDayOfMonth() + "/" + currActivityDate.getYear());
+                alert.setContentText(currActivity.getTitle() + ", " + currActivityDate.toLocalTime() + "\n" + currActivity.getDescription());
                 alert.showAndWait();
             });
         }
@@ -156,7 +159,8 @@ public class CalendarViewController implements ViewController {
         Map<Integer, List<DatedSyllabusEntity>> calendarMap = new HashMap<>();
 
         for (DatedSyllabusEntity syllabusItem: datedSyllabusEntities) {
-            int syllabusItemDate = 1;//syllabusItem.getDueDate().getDayOfMonth();
+            ZonedDateTime dueDate = ZonedDateTime.ofInstant(syllabusItem.getDueDate().toInstant(), ZoneId.systemDefault());
+            int syllabusItemDate = dueDate.getDayOfMonth();
             if(!calendarMap.containsKey(syllabusItemDate)){
                 calendarMap.put(syllabusItemDate, List.of(syllabusItem));
             } else {

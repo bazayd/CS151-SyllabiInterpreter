@@ -13,7 +13,7 @@ public class MainController extends Application {
     public static void main(String[] args) {
         launch();
     }
-
+    @Override
     public void start(Stage stage) throws IOException {
         //List<DatedSyllabusEntity> a = new ArrayList<DatedSyllabusEntity>();
         //for(int i = 0; i < 50; i++) {
