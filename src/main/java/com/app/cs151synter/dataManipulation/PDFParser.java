@@ -1,5 +1,6 @@
 package com.app.cs151synter.dataManipulation;
 
+import com.app.cs151synter.Main;
 import com.app.cs151synter.customExceptions.BadPDFFormatException;
 import com.app.cs151synter.dataContainers.*;
 import com.convertapi.client.Config;
@@ -19,7 +20,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class PDFParser {
-    private static final Logger logger = Logger.getLogger(PDFParser.class.getName());
+    private static final Logger logger = Logger.getLogger(Main.class.getName());
 
     public static void main(String[] args) throws IOException, ExecutionException, InterruptedException {
 //        Syllabus s1 = generateSyllabus("testsyllabus.pdf");
