@@ -19,7 +19,7 @@ public class Assignment implements DatedSyllabusEntity, Comparable<Assignment> {
     }
 
     public String getTitle() {
-        return null;
+        return "a";
     }
 
     public String getDueDate() {
@@ -31,7 +31,7 @@ public class Assignment implements DatedSyllabusEntity, Comparable<Assignment> {
     }
 
     public String getDescription() {
-        return null;
+        return "a";
     }
 
     @Override
