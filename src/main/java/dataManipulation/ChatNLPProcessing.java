@@ -81,7 +81,6 @@ public class ChatNLPProcessing {
 
         return switch (intentCategory) {
             case GENERATE_TEST_SCHEDULE -> new CalendarResponse(new ArrayList<>());
-            case GET_LOCATION -> new ParagraphResponse("Classroom Location: ");
             case GET_GRADING_POLICY, SYLLABUS_OVERVIEW -> new ListResponse(new ArrayList<>());
             case RECOMMEND_TEXTBOOK -> {
                 String materials = String.join(" ", syllabus.getTextbook().getInfo());
@@ -108,6 +107,13 @@ public class ChatNLPProcessing {
                 String officeHours = String.join(" ", syllabus.getOfficeHours().toString());
                 yield new ParagraphResponse("Office Hours are on: " + officeHours);
             }
+            case GREETING -> {
+                yield new ParagraphResponse("Hello, how can I help?");
+            }
+            case GET_LOCATION -> {
+                String classLocation = String.join(" ", syllabus.getClassroomLocation());
+                yield new ParagraphResponse("Classroom Location: " + classLocation);
+            }
             default -> null;
         };
     }
@@ -125,11 +131,11 @@ public class ChatNLPProcessing {
             return PossibleIntents.GENERATE_TEST_SCHEDULE;
         } else if (keywords.contains("office")) {
             return PossibleIntents.OFFICE_HOUR_TIMES;
-        } else if (keywords.contains("textbook") || keywords.contains("materials")) {
+        } else if (keywords.contains("textbook") || keywords.contains("materials") || keywords.contains("textbooks")) {
             return PossibleIntents.RECOMMEND_TEXTBOOK;
         } else if (keywords.contains("professor") || keywords.contains("contact info") || keywords.contains("instructor")) {
             return PossibleIntents.GET_PROFESSOR_INFO;
-        } else if (keywords.contains("location")) {
+        } else if (keywords.contains("location") || keywords.contains("classroom location") || keywords.contains("classroom")) {
             return PossibleIntents.GET_LOCATION;
         } else if (keywords.contains("grading policy")) {
             return PossibleIntents.GET_GRADING_POLICY;
@@ -139,7 +145,9 @@ public class ChatNLPProcessing {
             return PossibleIntents.COURSE_DESCRIPTION;
         }else if (keywords.contains("protocol") || keywords.contains("protocols") || keywords.contains("rules")) {
             return PossibleIntents.CLASSROOM_PROTOCOL;
-        } else {
+        }else if (keywords.contains("hello") || keywords.contains("hi") || keywords.contains("hey")) {
+            return PossibleIntents.GREETING;
+        }else {
             return PossibleIntents.UNKNOWN;
         }
     }

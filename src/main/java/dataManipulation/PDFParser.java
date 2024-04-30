@@ -44,7 +44,7 @@ public class PDFParser {
         // 2: Course Information, Class time: Instructor, Course Schedule
         // 1: Contact Information, class days/time: course schedule
 
-        String[] sections = text.split("(?i)(?=Contact Information|Course Description|Classroom Protocols|Course Materials|Course Schedule| Office Hours)");
+        String[] sections = text.split("(?i)(?=Contact Information|Course Description|Classroom Protocols|Course Materials|Course Schedule| Office Hours | Class Location)");
         for (String section : sections) {
             String[] lines = section.trim().split("\n", 2);
             if (lines.length > 0) {
@@ -66,6 +66,10 @@ public class PDFParser {
                         break;
                     case "Office Hours":
                         syllabus.setOfficeHours(parseOfficeHours(lines.length > 1 ? lines[1] : ""));
+                        break;
+                    case "Class Location":
+                        syllabus.setClassroomLocation(parseClassLocation(lines.length > 1 ? lines[1] : ""));
+                        break;
                     default:
                         parseUnrecognizedSection(lines[0], lines.length > 1 ? lines[1] : "", syllabus);
                         break;
@@ -191,6 +195,17 @@ public class PDFParser {
         return null;
     }
 
+    private static String parseClassLocation(String info) {
+        Pattern locationPattern = Pattern.compile("(?i)classroom\\s*:?\\s*(?:location\\s*)?(.+)");
+        Matcher locationMatcher = locationPattern.matcher(info);
+        if (locationMatcher.find()) {
+            logger.fine ("Professor: " + locationMatcher.group(1));
+            String rawLocation = locationMatcher.group(1);
+            return rawLocation;
+        }
+        return null;
+    }
+
     private static ClassroomProtocols parseClassroomProtocols(String s) {
         return new ClassroomProtocols(s); // TODO
     }
@@ -206,6 +221,7 @@ public class PDFParser {
     private static ContactInformation parseContactInformation(String s) {
         return new ContactInformation(s); // TODO
     }
+
 
     private static void parseUnrecognizedSection(String line, String s, Syllabus syllabus) {
         // TODO
