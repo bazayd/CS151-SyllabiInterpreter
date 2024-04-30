@@ -50,19 +50,6 @@ public class ChatNLPProcessing {
             } else {
                 System.out.println("Sorry, I didn't understand your question.");
             }
-
-//            if (response instanceof ParagraphResponse) {
-//                System.out.println(((ParagraphResponse) response).generateResponse());
-//            } else if (response instanceof CalendarResponse) {
-//                System.out.println(((CalendarResponse) response).generateResponse());
-//            } else if (response instanceof TodoListResponse) {
-//                System.out.println(((TodoListResponse) response).generateResponse());
-//            } else if (response instanceof ListResponse) {
-//                System.out.println(((ListResponse) response).generateResponse());
-//            } else {
-//                System.out.println("");
-//            }
-
             System.out.println("Speak to chat bot (x to quit): ");
         }
 
@@ -90,15 +77,7 @@ public class ChatNLPProcessing {
     public IntentResponse getIntentResponse (String input, Syllabus syllabus) {
 
         List<String> keywords = performNLPProcessing(input);
-
-//        for (String keyword : keywords) {
-//            System.out.println("Keyword in keywords: " + keyword);
-//        }
-
-
         PossibleIntents intentCategory = findGeneralIntent(keywords);
-
-//        System.out.println("Detected intent category: " + intentCategory);
 
         return switch (intentCategory) {
             case GENERATE_TEST_SCHEDULE -> new CalendarResponse(new ArrayList<>());
@@ -129,7 +108,7 @@ public class ChatNLPProcessing {
                 String officeHours = String.join(" ", syllabus.getOfficeHours().toString());
                 yield new ParagraphResponse("Office Hours are on: " + officeHours);
             }
-            default -> null; // Handle unknown intent
+            default -> null;
         };
     }
 
@@ -165,10 +144,7 @@ public class ChatNLPProcessing {
         }
     }
 
-    /*
-    *  Following methods allow for adding a Syllabus, getting access to syllabus,
-    * updating Syllabus, and removing syllabus.
-    * */
+
     public void addSyllabus (String profName, Syllabus syllabus) {
         syllabi.put (profName, syllabus);
     }
