@@ -1,10 +1,12 @@
 package com.app.cs151synter.dataContainers;
 
+import java.util.Calendar;
+
 public class Test implements DatedSyllabusEntity, Comparable<Test> {
 
     private TestType testType;
     private String title;
-    private String date;
+    private Calendar date;
 //    private LocalDateTime datetime;
 
     public Test(TestType testType, String title) {
@@ -16,7 +18,7 @@ public class Test implements DatedSyllabusEntity, Comparable<Test> {
 //        this.title = title;
 ////        this.datetime = datetime;
 //    }
-    public Test (TestType testType, String title, String date) {
+    public Test (TestType testType, String title, Calendar date) {
         this.testType = testType;
         this.title = title;
         this.date = date;
@@ -27,7 +29,7 @@ public class Test implements DatedSyllabusEntity, Comparable<Test> {
         String[] testInfo = new String[3];
 
         testInfo[0] = getTitle();
-        testInfo[1] = getDueDate();
+        testInfo[1] = getDueDate().toString();
         testInfo[2] = testType.toString();
 
         return testInfo;
@@ -46,11 +48,11 @@ public class Test implements DatedSyllabusEntity, Comparable<Test> {
         }
     }
 
-    public String getDueDate() {
+    public Calendar getDueDate() {
         return date;
     }
 
-    public void setDueDate(String date) {
+    public void setDueDate(Calendar date) {
         this.date = date;
     }
 

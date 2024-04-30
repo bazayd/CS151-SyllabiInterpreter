@@ -9,6 +9,8 @@ import com.convertapi.client.Param;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -20,11 +22,26 @@ public class PDFParser {
     private static final Logger logger = Logger.getLogger(PDFParser.class.getName());
 
     public static void main(String[] args) throws IOException, ExecutionException, InterruptedException {
-        Syllabus s1 = generateSyllabus("testsyllabus.pdf");
-        Syllabus s2 = generateSyllabus("testsyllabus2.pdf");
-        Syllabus s3 = generateSyllabus("testsyllabus3.pdf");
+//        Syllabus s1 = generateSyllabus("testsyllabus.pdf");
+//        Syllabus s2 = generateSyllabus("testsyllabus2.pdf");
+//        Syllabus s3 = generateSyllabus("testsyllabus3.pdf");
+//
+//        System.out.println (s3);
+//        String input = "Jan. 2, ";
+//
+//        String mmdd = "(\\d{1,2})[\\/](\\d{1,2})";
+//        String monddday = "(Jan.|January|Feb.|February|Mar.|March|Apr.|April|May|June|July|Aug.|August|Sep.|September|Oct.|October|Nov.|November|Dec.|December) (\\d{1,2}), [a-zA-Z]*"; // not going to write out the days
+//        Pattern pattern = Pattern.compile(monddday);
+//        Matcher matcher = pattern.matcher(input);
+//        if (matcher.find()) {
+//            System.out.println (matcher.group(1));
+//        } else
+//            System.out.println("fail");
+//        parseCalendarDate("2/22");
+//        parseCalendarDate("Jan. 34, 324");
 
-        System.out.println (s3);
+        Calendar c = parseCalendarDate("Jan. 23, 231");
+        System.out.println (c);
     }
 
     public static Syllabus generateSyllabus (String filename) throws IOException, ExecutionException, InterruptedException {
@@ -89,13 +106,15 @@ public class PDFParser {
         }
         return ans;
     }
+
     public static DatedSyllabusEntity parseSyllabusEntity (String input) {
         String[] entitydetails = separateDateTime(input);
         if (entitydetails == null)
             return null;
 
         String title = entitydetails[1].replaceAll("\n", "");
-        String date = entitydetails[0].trim();
+        String dateString = entitydetails[0].trim();
+        Calendar date = parseCalendarDate(dateString);
 
         Pattern finalPattern = Pattern.compile(".*\\bfinal\\b.*", Pattern.CASE_INSENSITIVE);
         Matcher finalMatcher = finalPattern.matcher(title);
@@ -117,6 +136,33 @@ public class PDFParser {
             String remSentence = sentence.replaceAll(pattern,"");
             return remSentence;
         } else return sentence;
+    }
+
+    public static Calendar parseCalendarDate (String dateString) {
+        String mmdd = "(\\d{1,2})[\\/](\\d{1,2})";
+        String monddday = "(Jan.|January|Feb.|February|Mar.|March|Apr.|April|May|June|July|Aug.|August|Sep.|September|Oct.|October|Nov.|November|Dec.|December) (\\d{1,2}), [a-zA-Z]*"; // not going to write out the days
+
+        Pattern mmdddPattern = Pattern.compile(mmdd);
+        Matcher mmmddMatcher = mmdddPattern.matcher(dateString);
+
+        Pattern mondddayPattern = Pattern.compile(monddday);
+        Matcher mondddayMatcher = mondddayPattern.matcher(dateString);
+        if (mmmddMatcher.find()) {
+//            System.out.println (mmmddMatcher.group(1));
+//            System.out.println (mmmddMatcher.group(2));
+            int month = Integer.parseInt(mmmddMatcher.group(1)) -1;
+            int day = Integer.parseInt(mmmddMatcher.group(2));
+            return new GregorianCalendar(2024, month, day); // TODO hardcoded year
+        } else if (mondddayMatcher.find()) {
+//            System.out.println (mondddayMatcher.group(1));
+//            System.out.println (mondddayMatcher.group(2));
+            String monthString = mondddayMatcher.group(1);
+            int day = Integer.parseInt (mondddayMatcher.group(2)) -1;
+            int month = CalendarHelper.getMonthFromString(monthString);
+            return new GregorianCalendar(2024, month, day);
+        }
+//        parseCalendarDate("2/22");
+        return null;
     }
 
     public static String[] separateDateTime(String sentence) {
@@ -172,7 +218,7 @@ public class PDFParser {
         if (officeHoursMatcher.find()) {
             logger.fine("Office Hours: " + officeHoursMatcher.group(2));
             String rawTextDateAndTime = officeHoursMatcher.group(2);
-            return new OfficeHours(rawTextDateAndTime); // TODO format this properly
+            return new OfficeHours(rawTextDateAndTime, new GregorianCalendar()); // TODO format this properly
             // TODO include location and stuff
         }
         return null;
