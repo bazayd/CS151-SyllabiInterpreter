@@ -55,7 +55,7 @@
         </Menu>
         <Menu mnemonicParsing="false" text="Upload File">
                <items>
-                  <MenuItem fx:id="upLoadFromFileSystemButton" mnemonicParsing="false" onAction="#onUploadFromFileSystemButton" text="Upload from file system" />
+                  <MenuItem fx:id="upLoadFromFileSystemButton" mnemonicParsing="false"  text="Upload from file system" />
                </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Help">
