@@ -31,11 +31,14 @@ public class LaunchChatBotViewController {
 //        fileChooser.setFileFilter(new FileNameExtensionFilter("*.pdf", "pdf")); // TODO figure out how to only accept pdfs
         fileChooser.setTitle("Select syllabus..");
         File file = fileChooser.showOpenDialog(root.getScene().getWindow());
+        if (file == null)
+            return;
         String filePath = file.toString();
         try {
             InfoContainer.addSyllabus (PDFParser.generateSyllabus(filePath));
         } catch (IOException | ExecutionException | InterruptedException e) {
             logger.severe("!!file upload failed!!");
+            logger.severe(e.toString());
         }
     }
 }

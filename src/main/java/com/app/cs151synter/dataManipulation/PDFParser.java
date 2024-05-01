@@ -46,6 +46,7 @@ public class PDFParser {
     }
 
     public static Syllabus generateSyllabus (String filename) throws IOException, ExecutionException, InterruptedException {
+        logger.fine ("generating syllabus...");
         String text = getRawText(filename);
 
         logger.fine (" ==== PARSED STUFF == =");
@@ -203,11 +204,13 @@ public class PDFParser {
     }
 
     private static String getRawText (String filename) throws IOException, ExecutionException, InterruptedException {
+        String filenameNoPath = filename.substring(filename.lastIndexOf("/"));
+        logger.fine(filenameNoPath);
         Config.setDefaultSecret("0LZqZF8QIRoQdmMl");
         ConvertApi.convert("pdf", "txt",
-                new Param("File", Paths.get("/tmp/" + filename))
+                new Param("File", Paths.get(filename))
         ).get().saveFilesSync(Paths.get("/tmp/"));
-        FileInputStream fs = new FileInputStream("/tmp/" + filename.substring(0,filename.lastIndexOf(".")) + ".txt");
+        FileInputStream fs = new FileInputStream("/tmp/" + filename.substring(0,filenameNoPath.lastIndexOf(".")) + ".txt");
         String s = new String((fs.readAllBytes()));
         fs.close();
         return s;
