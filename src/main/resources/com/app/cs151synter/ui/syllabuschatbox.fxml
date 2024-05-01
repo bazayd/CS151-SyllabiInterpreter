@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 
 
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" type="BorderPane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.cs151synter.ui.ChatbotViewController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0"  xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.cs151synter.ui.ChatbotViewController">
    <bottom>
       <TextField fx:id="textInput" onAction="#submitResponse" promptText="Talk to bot here..." BorderPane.alignment="CENTER" />
    </bottom>
@@ -31,4 +31,4 @@
         </buttons>
       </ButtonBar>
    </top>
-</fx:root>
+</BorderPane>
