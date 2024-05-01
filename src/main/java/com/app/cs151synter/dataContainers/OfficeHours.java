@@ -1,20 +1,22 @@
 package com.app.cs151synter.dataContainers;
 
+import java.util.Calendar;
+
 public class OfficeHours implements DatedSyllabusEntity{
-    private String date;
+    private Calendar date;
     public static void main(String[] args) {
 
     }
-    public OfficeHours (String date) {
+    public OfficeHours (String desc, Calendar date) {
         this.date = date;
     }
 
-    public String getDueDate() {
+    public Calendar getDueDate() {
         return date;
     }
 
 
-    public void setDueDate(String date) {
+    public void setDueDate(Calendar date) {
         this.date = date;
     }
     @Override
@@ -33,6 +35,6 @@ public class OfficeHours implements DatedSyllabusEntity{
     }
     @Override
     public String toString () {
-        return date;
+        return date.toString();
     }
 }

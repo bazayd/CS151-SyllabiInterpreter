@@ -1,7 +1,9 @@
 package com.app.cs151synter.dataContainers;
 
+import java.util.Calendar;
+
 public class Assignment implements DatedSyllabusEntity, Comparable<Assignment> {
-    private String date;
+    private Calendar date;
     private String title;
 //    private LocalDate date;
 
@@ -9,7 +11,7 @@ public class Assignment implements DatedSyllabusEntity, Comparable<Assignment> {
 
     }
 
-    public Assignment (String title, String date) {
+    public Assignment (String title, Calendar date) {
         this.title = title;
         this.date = date;
     }
@@ -19,14 +21,14 @@ public class Assignment implements DatedSyllabusEntity, Comparable<Assignment> {
     }
 
     public String getTitle() {
-        return null;
+        return title;
     }
 
-    public String getDueDate() {
-        return null;
+    public Calendar getDueDate() {
+        return date;
     }
 
-    public void setDueDate(String date) {
+    public void setDueDate(Calendar date) {
         this.date = date;
     }
 

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: WHITE;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.cs151synter.ui.CalendarViewController">
+    <FlowPane fx:id="calendar" hgap="10.0" layoutX="14.0" layoutY="116.0" prefHeight="700" prefWidth="1200" vgap="5.0" />
+    <HBox alignment="CENTER" layoutX="112.0" layoutY="14.0" prefHeight="44.0" prefWidth="1000" spacing="5.0">
+        <children>
+            <Button mnemonicParsing="false" onAction="#backOneMonth" text="&lt;" />
+            <Text fx:id="month" strokeType="OUTSIDE" strokeWidth="0.0" text="####">
+                <font>
+                    <Font size="22.0" />
+                </font>
+            </Text>
+            <Text fx:id="year" strokeType="OUTSIDE" strokeWidth="0.0" text="####">
+                <font>
+                    <Font size="22.0" />
+                </font>
+            </Text>
+            <Button mnemonicParsing="false" onAction="#forwardOneMonth" text="&gt;" />
+        </children>
+    </HBox>
+    <HBox alignment="CENTER" layoutX="19.0" layoutY="78.0" prefHeight="44.0" prefWidth="1000" spacing="175.0">
+        <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Su" textAlignment="CENTER" translateX="60.0" />
+            <Text layoutX="213.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mo" textAlignment="CENTER" translateX="40.0" />
+            <Text layoutX="222.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tu" textAlignment="CENTER" translateX="25.0" />
+            <Text layoutX="232.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="We" textAlignment="CENTER" translateX="5.0" />
+            <Text layoutX="241.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Th" textAlignment="CENTER" translateX="-15.0" />
+            <Text layoutX="251.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fr" textAlignment="CENTER" translateX="-30.0" />
+            <Text layoutX="266.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sa" textAlignment="CENTER" translateX="-50.0" />
+        </children>
+        <padding>
+            <Insets left="9.0" right="9.0" />
+        </padding>
+    </HBox>
+
+</AnchorPane>
