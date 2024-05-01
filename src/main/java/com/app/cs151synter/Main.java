@@ -12,7 +12,7 @@ public class Main extends Application {
 
     public void start(Stage stage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("launch-chatbot-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+        Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Launch!");
         stage.setScene(scene);
         stage.show();
