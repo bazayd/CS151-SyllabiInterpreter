@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" type="HBox" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.cs151synter.ui.MainController">
+   <children>
+      <VBox alignment="CENTER" prefHeight="367.0" prefWidth="302.0">
+         <children>
+            <Button fx:id="toDoListButton" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#toToDoList" prefHeight="25.0" prefWidth="200.0" text="View To Do List" textAlignment="CENTER" />
+            <Button fx:id="calendarButton" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#toCalendar" prefHeight="25.0" prefWidth="200.0" text="View Calendar" textAlignment="CENTER" />
+            <Button fx:id="classInfoButton" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#goToClassInfo" prefHeight="25.0" prefWidth="200.0" text="View Class Info" />
+            <Button fx:id="chatbotButton" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#toChatbot" onMouseClicked="#toChatBot" prefHeight="25.0" prefWidth="200.0" text="Chatbot" />
+         </children>
+      </VBox>
+      <VBox alignment="CENTER" prefHeight="400.0" prefWidth="298.0">
+         <children>
+            <Label alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="200.0" text="Syllabus Management" textAlignment="CENTER" underline="true" />
+            <Button fx:id="uploadSyllabusButton" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#syllabusPicker" prefHeight="25.0" prefWidth="200.0" text="Upload Syllabus" />
+            <Button fx:id="openSyllabiFolderButton" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#openSyllabiFolder" prefHeight="25.0" prefWidth="200.0" text="Open Syllabi Folder" />
+         </children>
+      </VBox>
+   </children>
+</fx:root>
