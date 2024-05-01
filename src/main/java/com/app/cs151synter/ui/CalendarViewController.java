@@ -22,8 +22,8 @@ import java.util.*;
 
 
 public class CalendarViewController implements ViewController {
-    ZonedDateTime dateFocus;
-    ZonedDateTime today;
+    ZonedDateTime dateFocus = ZonedDateTime.now();
+    ZonedDateTime today = ZonedDateTime.now();
     List<DatedSyllabusEntity> DatedSyllabusEntities;
     @FXML
     private Text year;
@@ -36,12 +36,15 @@ public class CalendarViewController implements ViewController {
 
     public void setDatedSyllabusEntities(List<DatedSyllabusEntity> DatedSyllabusEntities) {
         this.DatedSyllabusEntities = DatedSyllabusEntities;
+        dateFocus = ZonedDateTime.now();
+        today = ZonedDateTime.now();
+        drawCalendar();
     }
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         dateFocus = ZonedDateTime.now();
         today = ZonedDateTime.now();
-        drawCalendar();
+
     }
 
     @FXML
@@ -78,7 +81,7 @@ public class CalendarViewController implements ViewController {
         }
         int dateOffset = ZonedDateTime.of(dateFocus.getYear(), dateFocus.getMonthValue(), 1,0,0,0,0,dateFocus.getZone()).getDayOfWeek().getValue();
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 7; j++) {
                 StackPane stackPane = new StackPane();
 
@@ -119,26 +122,26 @@ public class CalendarViewController implements ViewController {
         VBox calendarActivityBlock = new VBox();
         for (int k = 0; k < datedSyllabusEntities.size(); k++) {
             //figure out how to actually show the items on the dates
-            DatedSyllabusEntity currActivity = DatedSyllabusEntities.get(k);
+            DatedSyllabusEntity currActivity = datedSyllabusEntities.get(k);
             ZonedDateTime currActivityDate = ZonedDateTime.ofInstant(currActivity.getDueDate().toInstant(), ZoneId.systemDefault());
             if(k >= 2) {
                 Text moreActivities = new Text("Click for more detail...");
                 calendarActivityBlock.getChildren().add(moreActivities);
                 moreActivities.setOnMouseClicked(mouseEvent -> {
                     String text = "";
-                    for(DatedSyllabusEntity calendarActivity : DatedSyllabusEntities){
+                    for(DatedSyllabusEntity calendarActivity : datedSyllabusEntities){
                         ZonedDateTime calendarActivityDate = ZonedDateTime.ofInstant(calendarActivity.getDueDate().toInstant(), ZoneId.systemDefault());
                         text += calendarActivity.getTitle() + ", " + calendarActivityDate.toLocalTime() + "\n" + calendarActivity.getDescription() + "\n";
                     }
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Info");
-                    alert.setHeaderText("Information on " + currActivityDate.getMonth().getValue() + "/" + currActivityDate.getDayOfMonth() + "/" + currActivityDate.getYear());
+                    alert.setHeaderText("Information on " + currActivityDate.getMonthValue() + "/" + currActivityDate.getDayOfMonth() + "/" + currActivityDate.getYear());
                     alert.setContentText(text);
                     alert.showAndWait();
                 });
                 break;
             }
-            Text text = new Text(DatedSyllabusEntities.get(k).getTitle() + ", " + currActivityDate.toLocalTime());
+            Text text = new Text(datedSyllabusEntities.get(k).getTitle() + ", " + currActivityDate.toLocalTime());
             calendarActivityBlock.getChildren().add(text);
             text.setOnMouseClicked(mouseEvent -> {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -160,15 +163,18 @@ public class CalendarViewController implements ViewController {
 
         for (DatedSyllabusEntity syllabusItem: datedSyllabusEntities) {
             ZonedDateTime dueDate = ZonedDateTime.ofInstant(syllabusItem.getDueDate().toInstant(), ZoneId.systemDefault());
+            int syllabusItemMonth = dueDate.getMonthValue();
             int syllabusItemDate = dueDate.getDayOfMonth();
-            if(!calendarMap.containsKey(syllabusItemDate)){
-                calendarMap.put(syllabusItemDate, List.of(syllabusItem));
-            } else {
-                List<DatedSyllabusEntity> OldListByDate = calendarMap.get(syllabusItemDate);
+            if(syllabusItemMonth == dateFocus.getMonthValue()) {
+                if (!calendarMap.containsKey(syllabusItemDate)) {
+                    calendarMap.put(syllabusItemDate, List.of(syllabusItem));
+                } else {
+                    List<DatedSyllabusEntity> OldListByDate = calendarMap.get(syllabusItemDate);
 
-                List<DatedSyllabusEntity> newList = new ArrayList<>(OldListByDate);
-                newList.add(syllabusItem);
-                calendarMap.put(syllabusItemDate, newList);
+                    List<DatedSyllabusEntity> newList = new ArrayList<>(OldListByDate);
+                    newList.add(syllabusItem);
+                    calendarMap.put(syllabusItemDate, newList);
+                }
             }
         }
         return  calendarMap;

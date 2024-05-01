@@ -30,15 +30,7 @@ public class ListViewController implements Initializable {
         //}
         //setDatedSyllabusEntities(a);
         //end of testing example
-        listView.getItems().addAll(DatedSyllabusEntities);
-        listView.setOnMouseClicked(event -> {
-            DatedSyllabusEntity b = listView.getSelectionModel().getSelectedItem();
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Information");
-            alert.setHeaderText(null);
-            alert.setContentText(b.getDescription());
-            alert.showAndWait();
-        });
+
     }
     @FXML
     protected void search() {
@@ -51,6 +43,15 @@ public class ListViewController implements Initializable {
     }
     public void setDatedSyllabusEntities(List<DatedSyllabusEntity> datedSyllabusEntities) {
         this.DatedSyllabusEntities = datedSyllabusEntities;
+        listView.getItems().addAll(DatedSyllabusEntities);
+        listView.setOnMouseClicked(event -> {
+            DatedSyllabusEntity b = listView.getSelectionModel().getSelectedItem();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Information");
+            alert.setHeaderText(null);
+            alert.setContentText(b.getDescription());
+            alert.showAndWait();
+        });
     }
 
 }

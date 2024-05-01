@@ -1,5 +1,7 @@
 package com.app.cs151synter.ui;
 
+import com.app.cs151synter.dataContainers.Assignment;
+import com.app.cs151synter.dataContainers.DatedSyllabusEntity;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,12 +9,19 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Calendar;
+import java.util.Random;
+import java.util.GregorianCalendar;
 
 public class MainController extends Application {
     // to reference with other
@@ -62,22 +71,48 @@ public class MainController extends Application {
 
     public void switchScene(Node n, String filename) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource(filename));
-
         Scene scene = n.getScene();
         Window window = scene.getWindow();
         Stage stage = (Stage) window;
 
         stage.setScene(new Scene(root));
     }
+    private List<DatedSyllabusEntity> getTest() {
+        List<DatedSyllabusEntity> datedSyllabusEntities = new ArrayList<>();
+        int year = ZonedDateTime.now().getYear();
+        int month = ZonedDateTime.now().getMonthValue();
 
+        Random random = new Random();
+        for (int i = 0; i < 50; i++) {
+            ZonedDateTime time = ZonedDateTime.of(year, random.nextInt(11)+1, random.nextInt(27)+1, 16,0,0,0,ZonedDateTime.now().getZone());
+            Calendar calendar = GregorianCalendar.from(time);
+            datedSyllabusEntities.add(new Assignment("fart", calendar));
+        }
+        return datedSyllabusEntities;
+    }
     @FXML
-    void toCalendar(javafx.event.ActionEvent actionEvent) {
+    void toCalendar(javafx.event.ActionEvent actionEvent) throws Exception {
 
+        FXMLLoader b = new FXMLLoader(getClass().getResource(("Calendar.fxml")));
+        AnchorPane calendar = (AnchorPane) b.load();
+        CalendarViewController calendarViewController = b.getController();
+        calendarViewController.setDatedSyllabusEntities(getTest());
+        Scene scene = mainScreen;
+        Window window = scene.getWindow();
+        Stage stage = (Stage) window;
+        stage.setScene(new Scene(calendar));
     }
 
     @FXML
-    void toToDoList(javafx.event.ActionEvent actionEvent) {
-
+    void toToDoList(javafx.event.ActionEvent actionEvent) throws IOException {
+        FXMLLoader b = new FXMLLoader(getClass().getResource(("ListView.fxml")));
+        AnchorPane calendar = (AnchorPane) b.load();
+        ListViewController listViewController = b.getController();
+        listViewController.setDatedSyllabusEntities(getTest());
+        Scene scene = mainScreen;
+        Window window = scene.getWindow();
+        Stage stage = (Stage) window;
+        stage.setScene(new Scene(calendar));
     }
 
     @FXML

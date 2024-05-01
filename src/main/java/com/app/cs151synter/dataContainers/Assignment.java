@@ -1,5 +1,7 @@
 package com.app.cs151synter.dataContainers;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Calendar;
 
 public class Assignment implements DatedSyllabusEntity, Comparable<Assignment> {
@@ -33,12 +35,13 @@ public class Assignment implements DatedSyllabusEntity, Comparable<Assignment> {
     }
 
     public String getDescription() {
-        return null;
+        return "a";
     }
 
     @Override
     public String toString () {
-        return "DATE: " + date  +
+        ZonedDateTime a = ZonedDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+        return "DATE: " + a.getMonthValue()  + "/" + a.getDayOfMonth() +
                 "\nTITLE: " + title;
     }
 
