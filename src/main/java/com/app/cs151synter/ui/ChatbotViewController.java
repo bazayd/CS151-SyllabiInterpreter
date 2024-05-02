@@ -1,6 +1,5 @@
 package com.app.cs151synter.ui;
 
-import com.app.cs151synter.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,9 +7,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
@@ -20,7 +18,7 @@ public class ChatbotViewController {
     private TextField textInput;
 
     @FXML
-    private VBox dialogHolder;
+    private ListView<Label> dialogHolder;
 
     @FXML
     private Button homeButton;
@@ -30,10 +28,11 @@ public class ChatbotViewController {
         String response = "You: " + textInput.getText();
 
         Label chatBubble = new Label(response);
-        dialogHolder.getChildren().addAll(chatBubble);
+        dialogHolder.getItems().addAll(chatBubble);
+
 
         chatBubble = new Label(botResponse());
-        dialogHolder.getChildren().addAll(chatBubble);
+        dialogHolder.getItems().addAll(chatBubble);
 
         textInput.clear();
     }
