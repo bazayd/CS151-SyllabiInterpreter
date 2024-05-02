@@ -1,21 +1,16 @@
 package com.app.cs151synter.ui;
 
-import com.app.cs151synter.Main;
 import com.app.cs151synter.dataContainers.Assignment;
 import com.app.cs151synter.dataContainers.DatedSyllabusEntity;
 import com.app.cs151synter.dataContainers.Syllabus;
-import com.app.cs151synter.dataManipulation.IntentResponse;
 import com.app.cs151synter.dataManipulation.PDFParser;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -26,11 +21,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Calendar;
-import java.util.Random;
-import java.util.GregorianCalendar;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 public class MainController extends Application {
@@ -42,15 +33,10 @@ public class MainController extends Application {
 
     @FXML Button openSyllabiFolderButton;
     @FXML private Button uploadSyllabusButton;
-    @FXML private MenuItem upLoadFromFileSystemButton;
     @FXML private Button classInfoButton;
     @FXML private Button chatbotButton;
     @FXML Button toDoListButton;
     @FXML Button calendarButton;
-
-    public static void main(String[] args) {
-        launch();
-    }
 
     public void start(Stage stage) throws Exception {
 
@@ -60,6 +46,7 @@ public class MainController extends Application {
         // scene creation
         createMainScene(root);
         mainStage = stage;
+        ClassSwitcher.setMainStage(stage);
         mainStage.setTitle("Syllabi Interpreter (CS 151)");
         mainStage.setScene(mainScreen);
         mainStage.show();
@@ -83,16 +70,6 @@ public class MainController extends Application {
         return fileChooser;
     }
 
-    public void switchScene(Node n, String filename) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource(filename));
-        Scene scene = n.getScene();
-        //scene.setRoot(root);
-        Window window = scene.getWindow();
-        Stage stage = (Stage) window;
-
-
-        stage.setScene(new Scene(root));
-    }
     private List<DatedSyllabusEntity> getTest() {
         List<DatedSyllabusEntity> datedSyllabusEntities = new ArrayList<>();
         int year = ZonedDateTime.now().getYear();
@@ -140,12 +117,12 @@ public class MainController extends Application {
 
     @FXML
     void goToClassInfo(javafx.event.ActionEvent actionEvent) throws Exception {
-        switchScene(classInfoButton, "syllabusclassinfo.fmxl");
+        ClassSwitcher.switchScene(classInfoButton, "syllabusclassinfo.fmxl");
     }
 
     @FXML
     void toChatbot(javafx.event.ActionEvent actionEvent) throws Exception {
-        switchScene(chatbotButton, "syllabuschatbox.fxml");
+        ClassSwitcher.switchScene(chatbotButton, "syllabuschatbox.fxml");
 
     }
 

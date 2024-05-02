@@ -43,13 +43,7 @@ public class ChatbotViewController {
 
     @FXML
     private void headHome() throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("syllabusmain.fxml"));
-
-        Scene scene = homeButton.getScene();
-        Window window = scene.getWindow();
-        Stage stage = (Stage) window;
-
-        stage.setScene(new Scene(root));
+        ClassSwitcher.switchScene(homeButton, "syllabusmain.fxml");
     }
 
 }
