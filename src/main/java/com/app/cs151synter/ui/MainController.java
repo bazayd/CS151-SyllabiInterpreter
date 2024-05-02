@@ -12,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
@@ -109,7 +110,8 @@ public class MainController extends Application {
     }
     @FXML
     void toCalendar(javafx.event.ActionEvent actionEvent) throws Exception {
-
+        if (!handleNullSyllabiFolder())
+            return;
         FXMLLoader b = new FXMLLoader(getClass().getResource(("Calendar.fxml")));
         //AnchorPane calendar = (AnchorPane) b.load();
         Parent a = b.load();
@@ -127,6 +129,8 @@ public class MainController extends Application {
 
     @FXML
     void toToDoList(javafx.event.ActionEvent actionEvent) throws IOException {
+        if (!handleNullSyllabiFolder())
+            return;
         FXMLLoader b = new FXMLLoader(getClass().getResource("ListView.fxml"));
         AnchorPane calendar = (AnchorPane) b.load();
         Parent a = calendar;
@@ -193,5 +197,15 @@ public class MainController extends Application {
 
     }
 
-
+    @FXML
+    public boolean handleNullSyllabiFolder () {
+        if (datedSyllabusEntities == null) {
+            Alert alert = new Alert (Alert.AlertType.INFORMATION);
+            alert.setContentText("No information to show.. did you upload a syllabus? ");
+            alert.setTitle("can't");
+            alert.showAndWait();
+            return false;
+        }
+        return true;
+    }
 }
