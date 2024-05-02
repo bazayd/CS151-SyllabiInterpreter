@@ -1,8 +1,11 @@
 package com.app.cs151synter.ui;
 
+import com.app.cs151synter.Main;
 import com.app.cs151synter.dataContainers.Assignment;
 import com.app.cs151synter.dataContainers.DatedSyllabusEntity;
+import com.app.cs151synter.dataContainers.Syllabus;
 import com.app.cs151synter.dataManipulation.IntentResponse;
+import com.app.cs151synter.dataManipulation.PDFParser;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,14 +22,19 @@ import javafx.stage.Window;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Calendar;
 import java.util.Random;
 import java.util.GregorianCalendar;
+import java.util.concurrent.ExecutionException;
 
 public class MainController extends Application {
+
     // to reference with other
     private static Scene mainScreen;
     private static Stage mainStage;
@@ -143,10 +151,33 @@ public class MainController extends Application {
 
     @FXML
     void syllabusPicker() throws IOException {
+        System.out.println ("on syllabus picker..");
         getFileChooser().setTitle("Upload Syllabus");
         File syllabus = getFileChooser().showOpenDialog(uploadSyllabusButton.getScene().getWindow());
+        if (syllabus == null)
+            return;
+        String syllabusFilePath = syllabus.toString();
+        String syllabusFileNoPath = syllabusFilePath.substring(syllabusFilePath.lastIndexOf("/")+1);
+        System.out.println ("attempting to copy file to /tmp/..");
+        Files.copy(syllabus.toPath(), Paths.get("/tmp/" + syllabusFileNoPath), StandardCopyOption.REPLACE_EXISTING);
 
-        // move file
+
+        System.out.println ("reading.. " + syllabusFileNoPath);
+        try {
+            Syllabus s = PDFParser.generateSyllabus(syllabusFileNoPath);
+            System.out.println ("finished reading..");
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
+//        Syllabus s = null;
+//        try {
+//            s = PDFParser.generateSyllabus(syllabusFilePath.toString());
+//        } catch (ExecutionException | InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//        // move file
+//        System.out.println ("printed..." + s);
     }
 
     @FXML

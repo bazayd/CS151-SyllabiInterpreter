@@ -21,9 +21,46 @@ import java.util.regex.Pattern;
 public class PDFParser {
     private static final Logger logger = Logger.getLogger(PDFParser.class.getName());
 
+//    private static String getRawText (String filename) throws IOException, ExecutionException, InterruptedException {
+//        System.out.println("getting raw text...");
+////        String filepath = filename.substring(filename.lastIndexOf("/")+1);
+////        System.out.println ()
+//        Config.setDefaultSecret("0LZqZF8QIRoQdmMl");
+//        ConvertApi.convert("pdf", "txt",
+//                new Param("File", Paths.get("/tmp/" + filename))
+//        ).get().saveFilesSync(Paths.get("/tmp/" + filename.substring(0, filename.lastIndexOf("/"))));
+//        FileInputStream fs = new FileInputStream("/tmp/" + filename.substring(0,filename.lastIndexOf(".")) + ".txt");
+//        String s = new String((fs.readAllBytes()));
+//        fs.close();
+//        return s;
+//    }
+
+    private static String getRawText (String filename) throws IOException, ExecutionException, InterruptedException {
+        Config.setDefaultSecret("0LZqZF8QIRoQdmMl");
+        ConvertApi.convert("pdf", "txt",
+                new Param("File", Paths.get("/tmp/" + filename))
+        ).get().saveFilesSync(Paths.get("/tmp/"));
+        FileInputStream fs = new FileInputStream("/tmp/" + filename.substring(0,filename.lastIndexOf(".")) + ".txt");
+        String s = new String((fs.readAllBytes()));
+        fs.close();
+        return s;
+    }
+//    private static String getRawText (String filename) throws IOException, ExecutionException, InterruptedException {
+//        String fileNoPath = filename.substring(filename.lastIndexOf("/")+1);
+//        String filePath = filename.substring(0, filename.lastIndexOf("/"));
+//        Config.setDefaultSecret("0LZqZF8QIRoQdmMl");
+//        ConvertApi.convert("pdf", "txt",
+//                new Param("File", Paths.get(filePath + fileNoPath))
+//        ).get().saveFilesSync(Paths.get(filePath));
+//        FileInputStream fs = new FileInputStream(filePath + fileNoPath.substring(0,fileNoPath.lastIndexOf(".")) + ".txt");
+//        String s = new String((fs.readAllBytes()));
+//        fs.close();
+//        return s;
+//    }
+
     public static void main(String[] args) throws IOException, ExecutionException, InterruptedException {
-//        Syllabus s1 = generateSyllabus("testsyllabus.pdf");
-//        Syllabus s2 = generateSyllabus("testsyllabus2.pdf");
+//        Syllabus s1 = generateSyllabus("/Users/vkouru007/Downloads/Object_Oriented_Design_Section_09_CS_151_Spring_2024.pdf");
+        Syllabus s2 = generateSyllabus("syllabus1.pdf");
 //        Syllabus s3 = generateSyllabus("testsyllabus3.pdf");
 //
 //        System.out.println (s3);
@@ -40,8 +77,8 @@ public class PDFParser {
 //        parseCalendarDate("2/22");
 //        parseCalendarDate("Jan. 34, 324");
 
-        Calendar c = parseCalendarDate("Jan. 23, 231");
-        System.out.println (c);
+//        Calendar c = parseCalendarDate("Jan. 23, 231");
+//        System.out.println (c);
     }
 
     public static Syllabus generateSyllabus (String filename) throws IOException, ExecutionException, InterruptedException {
@@ -199,17 +236,6 @@ public class PDFParser {
 //            System.out.println("No date and time found in the sentence.");
             return null;
         }
-    }
-
-    private static String getRawText (String filename) throws IOException, ExecutionException, InterruptedException {
-        Config.setDefaultSecret("0LZqZF8QIRoQdmMl");
-        ConvertApi.convert("pdf", "txt",
-                new Param("File", Paths.get("/tmp/" + filename))
-        ).get().saveFilesSync(Paths.get("/tmp/"));
-        FileInputStream fs = new FileInputStream("/tmp/" + filename.substring(0,filename.lastIndexOf(".")) + ".txt");
-        String s = new String((fs.readAllBytes()));
-        fs.close();
-        return s;
     }
 
     private static OfficeHours parseOfficeHours(String info) {
