@@ -2,7 +2,8 @@ package com.app.cs151synter.ui;
 
 import com.app.cs151synter.dataContainers.Assignment;
 import com.app.cs151synter.dataContainers.DatedSyllabusEntity;
-import com.app.cs151synter.dataManipulation.IntentResponse;
+import com.app.cs151synter.dataContainers.Syllabus;
+import com.app.cs151synter.dataManipulation.*;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
@@ -25,11 +27,15 @@ import java.util.List;
 import java.util.Calendar;
 import java.util.Random;
 import java.util.GregorianCalendar;
+import java.util.concurrent.ExecutionException;
 
 public class MainController extends Application {
     // to reference with other
     private static Scene mainScreen;
     private static FileChooser fileChooser;
+
+    private static String syllabusFile;
+
 
     @FXML Button openSyllabiFolderButton;
     @FXML private Button uploadSyllabusButton;
@@ -38,14 +44,13 @@ public class MainController extends Application {
     @FXML private Button chatbotButton;
     @FXML Button toDoListButton;
     @FXML Button calendarButton;
-
     public static void main(String[] args) {
         launch();
     }
 
     public void start(Stage stage) throws Exception {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("launch-chatbot-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("syllabusmain.fxml"));
         Parent root = fxmlLoader.load();
 
         // scene creation
@@ -141,8 +146,48 @@ public class MainController extends Application {
     void syllabusPicker() throws IOException {
         getFileChooser().setTitle("Upload Syllabus");
         File syllabus = getFileChooser().showOpenDialog(mainScreen.getWindow());
+        syllabusFile = syllabus.getName();
 
-        // move file
+
+        System.out.println("File name:" + syllabusFile);
+
+    }
+
+    String nlpResponse(String userInput) {
+        ChatNLPProcessing chatBot = new ChatNLPProcessing();
+        PDFParser pdfParser = new PDFParser();
+
+        Syllabus attachedSyllabus = null;
+
+
+
+        System.out.println(userInput);
+        System.out.println("File name: " + syllabusFile);
+
+
+        try {
+            attachedSyllabus = PDFParser.generateSyllabus(syllabusFile);
+        } catch (IOException | ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+        IntentResponse intentResponse = chatBot.getIntentResponse(userInput, attachedSyllabus);
+
+
+        if (intentResponse instanceof ParagraphResponse) {
+            return (intentResponse.generateResponse());
+        } else if (intentResponse instanceof CalendarResponse) {
+            return (intentResponse.generateResponse());
+        } else if (intentResponse instanceof TodoListResponse) {
+            return (intentResponse.generateResponse());
+        } else if (intentResponse instanceof ListResponse) {
+            return (intentResponse.generateResponse());
+        }
+        return "no available response";
+
     }
 
     @FXML

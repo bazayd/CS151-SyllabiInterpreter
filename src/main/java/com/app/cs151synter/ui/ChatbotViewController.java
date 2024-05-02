@@ -1,6 +1,8 @@
 package com.app.cs151synter.ui;
 
 import com.app.cs151synter.Main;
+import com.app.cs151synter.dataContainers.Syllabus;
+import com.app.cs151synter.dataManipulation.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,10 +16,13 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
+import java.io.IOException;
+import java.util.concurrent.ExecutionException;
+
 public class ChatbotViewController {
 
     @FXML
-    private TextField textInput;
+    public TextField textInput;
 
     @FXML
     private VBox dialogHolder;
@@ -25,8 +30,10 @@ public class ChatbotViewController {
     @FXML
     private Button homeButton;
 
+
+
     @FXML
-    private void submitResponse(ActionEvent event) {
+    public void submitResponse(ActionEvent event) throws IOException {
         String response = "You: " + textInput.getText();
 
         Label chatBubble = new Label(response);
@@ -38,9 +45,12 @@ public class ChatbotViewController {
         textInput.clear();
     }
 
-    private String botResponse() {
-        return "Bot: placeholder text";
+    private String botResponse() throws IOException {
+        MainController mainController = new MainController();
+        System.out.println(mainController.nlpResponse(textInput.getText()));
+        return mainController.nlpResponse(textInput.getText());
     }
+
 
     @FXML
     private void headHome() throws Exception {

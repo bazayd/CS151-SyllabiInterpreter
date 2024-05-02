@@ -204,9 +204,9 @@ public class PDFParser {
     private static String getRawText (String filename) throws IOException, ExecutionException, InterruptedException {
         Config.setDefaultSecret("0LZqZF8QIRoQdmMl");
         ConvertApi.convert("pdf", "txt",
-                new Param("File", Paths.get("/tmp/" + filename))
-        ).get().saveFilesSync(Paths.get("/tmp/"));
-        FileInputStream fs = new FileInputStream("/tmp/" + filename.substring(0,filename.lastIndexOf(".")) + ".txt");
+                new Param("File", Paths.get("" + filename))
+        ).get().saveFilesSync(Paths.get(""));
+        FileInputStream fs = new FileInputStream("" + filename.substring(0,filename.lastIndexOf(".")) + ".txt");
         String s = new String((fs.readAllBytes()));
         fs.close();
         return s;
