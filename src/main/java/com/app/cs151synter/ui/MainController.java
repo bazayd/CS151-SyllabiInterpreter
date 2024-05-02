@@ -29,6 +29,7 @@ import java.util.GregorianCalendar;
 public class MainController extends Application {
     // to reference with other
     private static Scene mainScreen;
+    private static Stage mainStage;
     private static FileChooser fileChooser;
 
     @FXML Button openSyllabiFolderButton;
@@ -45,14 +46,15 @@ public class MainController extends Application {
 
     public void start(Stage stage) throws Exception {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("launch-chatbot-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("syllabusmain.fxml"));
         Parent root = fxmlLoader.load();
 
         // scene creation
         createMainScene(root);
-        stage.setTitle("Syllabi Interpreter (CS 151)");
-        stage.setScene(mainScreen);
-        stage.show();
+        mainStage = stage;
+        mainStage.setTitle("Syllabi Interpreter (CS 151)");
+        mainStage.setScene(mainScreen);
+        mainStage.show();
     }
 
     public static Scene createMainScene(Parent p) {
@@ -89,7 +91,7 @@ public class MainController extends Application {
         int month = ZonedDateTime.now().getMonthValue();
 
         Random random = new Random();
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 10; i++) {
             ZonedDateTime time = ZonedDateTime.of(year, random.nextInt(11)+1, random.nextInt(27)+1, 16,0,0,0,ZonedDateTime.now().getZone());
             Calendar calendar = GregorianCalendar.from(time);
             datedSyllabusEntities.add(new Assignment("fart", calendar));
@@ -106,10 +108,12 @@ public class MainController extends Application {
         calendarViewController.setDatedSyllabusEntities(getTest());
         //Button back = calendarViewController.getHomeButton();
 
-        Scene scene = mainScreen;
+        Scene scene = getMainScreen();
+
         Window window = scene.getWindow();
-        Stage stage = (Stage) window;
-        stage.setScene(new Scene(a));
+
+        mainStage.setScene(new Scene(a));
+
     }
 
     @FXML
@@ -120,10 +124,10 @@ public class MainController extends Application {
         ListViewController listViewController = b.getController();
         listViewController.setDatedSyllabusEntities(getTest());
         Scene scene = createMainScene(a);
-        //scene.setRoot(calendar);
+        //scene.setRoot(a);
         Window window = scene.getWindow();
         Stage stage = (Stage) window;
-        stage.setScene(new Scene(a));
+        mainStage.setScene(new Scene(a));
     }
 
     @FXML
@@ -140,7 +144,7 @@ public class MainController extends Application {
     @FXML
     void syllabusPicker() throws IOException {
         getFileChooser().setTitle("Upload Syllabus");
-        File syllabus = getFileChooser().showOpenDialog(mainScreen.getWindow());
+        File syllabus = getFileChooser().showOpenDialog(uploadSyllabusButton.getScene().getWindow());
 
         // move file
     }
