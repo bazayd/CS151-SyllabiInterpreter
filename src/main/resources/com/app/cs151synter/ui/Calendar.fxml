@@ -9,6 +9,7 @@
     <FlowPane fx:id="calendar" hgap="10.0" layoutX="14.0" layoutY="116.0" prefHeight="700" prefWidth="1200" vgap="5.0" />
     <HBox alignment="CENTER" layoutX="112.0" layoutY="14.0" prefHeight="44.0" prefWidth="1000" spacing="5.0">
         <children>
+         <Button fx:id="homeButton" mnemonicParsing="false" onAction = "#headHome" text="Home" />
             <Button mnemonicParsing="false" onAction="#backOneMonth" text="&lt;" />
             <Text fx:id="month" strokeType="OUTSIDE" strokeWidth="0.0" text="####">
                 <font>

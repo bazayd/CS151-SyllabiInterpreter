@@ -2,6 +2,7 @@ package com.app.cs151synter.ui;
 
 import com.app.cs151synter.dataContainers.Assignment;
 import com.app.cs151synter.dataContainers.DatedSyllabusEntity;
+import com.app.cs151synter.dataManipulation.IntentResponse;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,7 +10,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -30,6 +33,7 @@ public class MainController extends Application {
 
     @FXML Button openSyllabiFolderButton;
     @FXML private Button uploadSyllabusButton;
+    @FXML private MenuItem upLoadFromFileSystemButton;
     @FXML private Button classInfoButton;
     @FXML private Button chatbotButton;
     @FXML Button toDoListButton;
@@ -41,7 +45,7 @@ public class MainController extends Application {
 
     public void start(Stage stage) throws Exception {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("syllabusmain.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("launch-chatbot-view.fxml"));
         Parent root = fxmlLoader.load();
 
         // scene creation
@@ -72,8 +76,10 @@ public class MainController extends Application {
     public void switchScene(Node n, String filename) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource(filename));
         Scene scene = n.getScene();
+        //scene.setRoot(root);
         Window window = scene.getWindow();
         Stage stage = (Stage) window;
+
 
         stage.setScene(new Scene(root));
     }
@@ -94,25 +100,30 @@ public class MainController extends Application {
     void toCalendar(javafx.event.ActionEvent actionEvent) throws Exception {
 
         FXMLLoader b = new FXMLLoader(getClass().getResource(("Calendar.fxml")));
-        AnchorPane calendar = (AnchorPane) b.load();
+        //AnchorPane calendar = (AnchorPane) b.load();
+        Parent a = b.load();
         CalendarViewController calendarViewController = b.getController();
         calendarViewController.setDatedSyllabusEntities(getTest());
+        //Button back = calendarViewController.getHomeButton();
+
         Scene scene = mainScreen;
         Window window = scene.getWindow();
         Stage stage = (Stage) window;
-        stage.setScene(new Scene(calendar));
+        stage.setScene(new Scene(a));
     }
 
     @FXML
     void toToDoList(javafx.event.ActionEvent actionEvent) throws IOException {
-        FXMLLoader b = new FXMLLoader(getClass().getResource(("ListView.fxml")));
+        FXMLLoader b = new FXMLLoader(getClass().getResource("ListView.fxml"));
         AnchorPane calendar = (AnchorPane) b.load();
+        Parent a = calendar;
         ListViewController listViewController = b.getController();
         listViewController.setDatedSyllabusEntities(getTest());
-        Scene scene = mainScreen;
+        Scene scene = createMainScene(a);
+        //scene.setRoot(calendar);
         Window window = scene.getWindow();
         Stage stage = (Stage) window;
-        stage.setScene(new Scene(calendar));
+        stage.setScene(new Scene(a));
     }
 
     @FXML
@@ -123,12 +134,13 @@ public class MainController extends Application {
     @FXML
     void toChatbot(javafx.event.ActionEvent actionEvent) throws Exception {
         switchScene(chatbotButton, "syllabuschatbox.fxml");
+
     }
 
     @FXML
     void syllabusPicker() throws IOException {
         getFileChooser().setTitle("Upload Syllabus");
-        File syllabus = getFileChooser().showOpenDialog(uploadSyllabusButton.getScene().getWindow());
+        File syllabus = getFileChooser().showOpenDialog(mainScreen.getWindow());
 
         // move file
     }
@@ -138,4 +150,6 @@ public class MainController extends Application {
         // opens the folder containing syllabi (change the brackets)
 
     }
+
+
 }

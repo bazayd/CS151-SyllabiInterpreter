@@ -15,12 +15,12 @@ public class ClassInfoController {
     @FXML Button syllabiGenerateButton;
     @FXML private VBox syllabiInfoContainer;
     @FXML private Button homeButton;
-
     @FXML
     void goHomeScreen(ActionEvent event) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("syllabusmain.fxml"));
 
         Scene scene = homeButton.getScene();
+        //scene.setRoot(root);
         Window window = scene.getWindow();
         Stage stage = (Stage) window;
 

@@ -7,13 +7,18 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import java.net.URL;
 import java.time.ZoneId;
@@ -22,6 +27,7 @@ import java.util.*;
 
 
 public class CalendarViewController implements ViewController {
+
     ZonedDateTime dateFocus = ZonedDateTime.now();
     ZonedDateTime today = ZonedDateTime.now();
     List<DatedSyllabusEntity> DatedSyllabusEntities;
@@ -33,6 +39,8 @@ public class CalendarViewController implements ViewController {
 
     @FXML
     private FlowPane calendar;
+    @FXML
+    private Button homeButton;
 
     public void setDatedSyllabusEntities(List<DatedSyllabusEntity> DatedSyllabusEntities) {
         this.DatedSyllabusEntities = DatedSyllabusEntities;
@@ -41,12 +49,22 @@ public class CalendarViewController implements ViewController {
         drawCalendar();
     }
 
+
     public void initialize(URL url, ResourceBundle resourceBundle) {
         dateFocus = ZonedDateTime.now();
         today = ZonedDateTime.now();
 
     }
+    @FXML
+    private void headHome() throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("syllabusmain.fxml"));
 
+        Scene scene = homeButton.getScene();
+        Window window = scene.getWindow();
+        Stage stage = (Stage) window;
+
+        stage.setScene(new Scene(root));
+    }
     @FXML
     void backOneMonth(ActionEvent event) {
         dateFocus = dateFocus.minusMonths(1);
