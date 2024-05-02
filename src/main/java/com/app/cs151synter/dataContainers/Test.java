@@ -1,5 +1,7 @@
 package com.app.cs151synter.dataContainers;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Calendar;
 
 public class Test implements DatedSyllabusEntity, Comparable<Test> {
@@ -58,7 +60,8 @@ public class Test implements DatedSyllabusEntity, Comparable<Test> {
 
     @Override
     public String getDescription() {
-        return "";
+        ZonedDateTime a = ZonedDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+        return testType.name() + " DATE: " + a.getMonthValue()  + "/" + a.getDayOfMonth() + "\n";
     }
 
 //    public void setTestType(TestType testType) {
@@ -74,8 +77,8 @@ public class Test implements DatedSyllabusEntity, Comparable<Test> {
     }
     @Override
     public String toString () {
-        return "DATE: " + date +
-                "\nTITLE: " + title +
-                "\nTYPE: " + testType;
+        ZonedDateTime a = ZonedDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+        return "DATE: " + a.getMonthValue()  + "/" + a.getDayOfMonth() +
+                "\nTITLE: " + title;
     }
 }

@@ -10,7 +10,7 @@
    <children>
       <ButtonBar layoutX="1.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="40.0" prefWidth="600.0" AnchorPane.bottomAnchor="359.2" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0">
         <buttons>
-            <Button fx:id="syllabiGenerateButton" mnemonicParsing="false" onAction="#generateSyllabi" text="Generate Syllabi Info" />
+
           <Button fx:id="homeButton" alignment="CENTER" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#goHomeScreen" text="Home" />
         </buttons>
       </ButtonBar>
