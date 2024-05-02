@@ -2,7 +2,6 @@ package com.app.cs151synter.ui;
 
 import com.app.cs151synter.dataContainers.Assignment;
 import com.app.cs151synter.dataContainers.DatedSyllabusEntity;
-import com.app.cs151synter.dataManipulation.IntentResponse;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +11,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -20,15 +18,12 @@ import javafx.stage.Window;
 import java.io.File;
 import java.io.IOException;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Calendar;
-import java.util.Random;
-import java.util.GregorianCalendar;
+import java.util.*;
 
 public class MainController extends Application {
     // to reference with other
     private static Scene mainScreen;
+    private static Stage mainStage;
     private static FileChooser fileChooser;
 
     @FXML Button openSyllabiFolderButton;
@@ -50,9 +45,10 @@ public class MainController extends Application {
 
         // scene creation
         createMainScene(root);
-        stage.setTitle("Syllabi Interpreter (CS 151)");
-        stage.setScene(mainScreen);
-        stage.show();
+        setMainStage(stage);
+        mainStage.setTitle("Syllabi Interpreter (CS 151)");
+        mainStage.setScene(mainScreen);
+        mainStage.show();
     }
 
     public static Scene createMainScene(Parent p) {
@@ -62,8 +58,12 @@ public class MainController extends Application {
         return mainScreen;
     }
 
-    public static Scene getMainScreen() {
-        return mainScreen;
+    static Stage getMainStage() {
+        return mainStage;
+    }
+
+    static void setMainStage(Stage s) {
+        mainStage = s;
     }
 
     public static FileChooser getFileChooser() {
@@ -121,9 +121,10 @@ public class MainController extends Application {
         listViewController.setDatedSyllabusEntities(getTest());
         Scene scene = createMainScene(a);
         //scene.setRoot(calendar);
-        Window window = scene.getWindow();
-        Stage stage = (Stage) window;
-        stage.setScene(new Scene(a));
+        //Window window = scene.getWindow();
+        //Stage stage = (Stage) window;
+        //stage.setScene(new Scene(a));
+        getMainStage().setScene(new Scene(a));
     }
 
     @FXML
