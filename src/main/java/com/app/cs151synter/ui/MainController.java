@@ -47,6 +47,7 @@ public class MainController extends Application {
     @FXML private Button chatbotButton;
     @FXML Button toDoListButton;
     @FXML Button calendarButton;
+    List<DatedSyllabusEntity> datedSyllabusEntities;
 
     public static void main(String[] args) {
         launch();
@@ -113,7 +114,7 @@ public class MainController extends Application {
         //AnchorPane calendar = (AnchorPane) b.load();
         Parent a = b.load();
         CalendarViewController calendarViewController = b.getController();
-        calendarViewController.setDatedSyllabusEntities(getTest());
+        calendarViewController.setDatedSyllabusEntities(datedSyllabusEntities);
         //Button back = calendarViewController.getHomeButton();
 
         Scene scene = getMainScreen();
@@ -130,7 +131,7 @@ public class MainController extends Application {
         AnchorPane calendar = (AnchorPane) b.load();
         Parent a = calendar;
         ListViewController listViewController = b.getController();
-        listViewController.setDatedSyllabusEntities(getTest());
+        listViewController.setDatedSyllabusEntities(datedSyllabusEntities);
         Scene scene = createMainScene(a);
         //scene.setRoot(a);
         Window window = scene.getWindow();
@@ -166,6 +167,12 @@ public class MainController extends Application {
         try {
             Syllabus s = PDFParser.generateSyllabus(syllabusFileNoPath);
             System.out.println ("finished reading..");
+            List<DatedSyllabusEntity> temp = new ArrayList<>();
+            temp.addAll(s.getAllTests());
+            temp.addAll(s.getAssignments());
+            temp.add(s.getOfficeHours());
+            datedSyllabusEntities = temp;
+
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }

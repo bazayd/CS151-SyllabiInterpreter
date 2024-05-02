@@ -1,5 +1,7 @@
 package com.app.cs151synter.dataContainers;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Calendar;
 
 public class OfficeHours implements DatedSyllabusEntity{
@@ -19,22 +21,26 @@ public class OfficeHours implements DatedSyllabusEntity{
     public void setDueDate(Calendar date) {
         this.date = date;
     }
+
     @Override
     public String getDescription() {
-        return "";
+        ZonedDateTime a = ZonedDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+        return "DATE: " + a.getMonthValue()  + "/" + a.getDayOfMonth() + " At: " + getLocation() + "\n";
     }
 
     public String[] getInfo() {
         return new String[0];
     }
     public String getTitle() {
-        return null;
+        return "OFFICE HOURS";
     }
     public String getLocation () {
-        return "somewhere";
+        return "SJSU";
     }
     @Override
     public String toString () {
-        return date.toString();
+        ZonedDateTime a = ZonedDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+        return "OFFICE HOURS \n DATE: " + a.getMonthValue()  + "/" + a.getDayOfMonth();
     }
+
 }

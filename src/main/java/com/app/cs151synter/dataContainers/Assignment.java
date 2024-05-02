@@ -35,7 +35,7 @@ public class Assignment implements DatedSyllabusEntity, Comparable<Assignment> {
     }
 
     public String getDescription() {
-        return "a";
+        return "Assignment Description\n";
     }
 
     @Override
