@@ -83,7 +83,7 @@ Professor:
 ### Solution:
 
 Syllabi Interpreter solves the problem/issue that we mentioned in the beginning, the interpreter will organize all the class due dates, policies, etc. into a calendar or list and allow the student to keep track of all their homework, tests, and important policies <br>
-taht way they can stay on top of their classes and professors can spend their time productively as well.
+that way they can stay on top of their classes and professors can spend their time productively as well.
 
 ## How to run Syllabi Interpreter:
 
