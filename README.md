@@ -91,9 +91,15 @@ taht way they can stay on top of their classes and professors can spend their ti
 
 In order to run the Interpreter, you run the program through the Main java class as shown below: <br>
 
-![Syllabus Main Page class](Snapshots/LaunchSyllabi.png)
+![Syllabus Main Page class](Snapshots/LaunchSyllabi.png) <br>
 
 Once you run the Main class, you will be prompted to the Syllabi Intepreter main page: <br>
 
-![Syllabi Interpreter main page](Snapshots/SyllabiMain.png)
+![Syllabi Interpreter main page](Snapshots/SyllabiMain.png) <br>
+
+The snapshot belows displays the following messages letting you know that the file you attached was read, in this case I attached a file named "testsyllabus":
+
+![Syllabus read message](Snapshots/FileRead.png) <br>
+
+
 
