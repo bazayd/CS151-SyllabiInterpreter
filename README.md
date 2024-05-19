@@ -11,30 +11,28 @@ Below we'll go over overall contributions, diagrams, proposal, code overview, an
 
 ### [Proposal:](https://docs.google.com/document/d/1-qDx8XFAJ5Z65TbwcVLJdTpm15bCwIX3MAAEdbgX7ZU/edit#heading=h.j7dxhyv3ht4d)
 
-#### Brandon Arriaga - Contributions to Plan and Approach for the project, such as coming up with design of UI, team workload, and keeping track of code snapshots as well as to Proposal/Issue and what a user may benefit from using it (Issues that could arise in a real-world scenario and how the Interpreter can help them)
-#### Vaishnavi Kouru - Contributions to References, environment suggestions, as well as solutions and how the solution tackles the issue we are trying to solve. Contributions to Proposal/Issue and what the project is about and its main points.
-#### Anhduy Phan - Contributions to the list of operations for intended users such as having list operations for a Student user and those for Professor user. 
-#### Ace Lavilla - Contributions to intended usage description on the proposal, stating how the proposal is inteded to be used by students and by professors, etc.
+#### Brandon Arriaga - Contributions to Plan and Approach for the project, such as coming up with design of UI, team workload, and keeping track of code snapshots as well as to Proposal/Issue and what a user may benefit from using it (Issues that could arise in a real-world scenario and how the Interpreter can help them) <br>
+#### Vaishnavi Kouru - Contributions to References, environment suggestions, as well as solutions and how the solution tackles the issue we are trying to solve. Contributions to Proposal/Issue and what the project is about and its main points. <br>
+#### Anhduy Phan - Contributions to the list of operations for intended users such as having list operations for a Student user and those for Professor user. <br> 
+#### Ace Lavilla - Contributions to intended usage description on the proposal, stating how the proposal is inteded to be used by students and by professors, etc. <br>
 
 ### [Project Presentation:](https://docs.google.com/presentation/d/1qu1R7BWXlw2hoM2WQdJhXvBn5K19W1CCnBevrbxpgsA/edit#slide=id.p)
 
-#### Brandon Arriaga - Contributions to project overview, stating Goal of the project and what the purpose of it is. Stated backend tools such as Stanford CoreNLP and ConverAPI.
-#### Vaishnavi Kouru - Contributions to design choices and what conventions were followed by our code. As well as error handling that explains how program handles errors or exceptions.
-#### Anhduy Phan - Contributions to problems being faced by the group such as any lack of communication or issues that arose during the construction of the program.
-#### Ace Lavilla - Contributions to project layout and UI overall, displayed the multiple controllers being used to display program and how it ties together.
+#### Brandon Arriaga - Contributions to project overview, stating Goal of the project and what the purpose of it is. Stated backend tools such as Stanford CoreNLP and ConverAPI. <br>
+#### Vaishnavi Kouru - Contributions to design choices and what conventions were followed by our code. As well as error handling that explains how program handles errors or exceptions. <br>
+#### Anhduy Phan - Contributions to problems being faced by the group such as any lack of communication or issues that arose during the construction of the program. <br>
+#### Ace Lavilla - Contributions to project layout and UI overall, displayed the multiple controllers being used to display program and how it ties together. <br>
 
 ### Project Report and Code:
 
-#### Brandon Arriaga - Contributions to project report, creating and editing README. Part of the backend team, helped set up entities for Syllabus class as well as Chat NLP Processor that used Standford NLP to provide output
-for user when asking specific questions about syllabus such as textbook or professor contact information. Also contributed to design of frontend, main startup menu for the program. Helped troubleshoot and debug errors.
-#### Vaishnavi Kouru - Part of backend team. Contributions to PDF Parser functionality, through the use of ApachePDFBoxm, information such as textbook info, contact info, and important dates were extracted to then be imported to a calendar and to list format. Also contributed to
-debugging and troubleshooting errors within the group.
-#### Anhduy Phan - Contributions to UI as part of the frontend team, contributed to FXML code with classes like syllabuschatbot.fxml and syllabusclassinfo.fxml
-#### Ace Lavilla - Contributions to UI as part of the frontend team, contributed to multiple controllers tied to each other such as the Calendar View Controller, Main Controller, Launch View controller, etc.
+#### Brandon Arriaga - Contributions to project report, creating and editing README. Part of the backend team, helped set up entities for Syllabus class as well as Chat NLP Processor that used Standford NLP to provide output for user when asking specific questions about syllabus such as textbook or professor contact information. Also contributed to design of frontend, main startup menu for the program. Helped troubleshoot and debug errors. <br>
+#### Vaishnavi Kouru - Part of backend team. Contributions to PDF Parser functionality, through the use of ApachePDFBoxm, information such as textbook info, contact info, and important dates were extracted to then be imported to a calendar and to list format. Also contributed to debugging and troubleshooting errors within the group. <br>
+#### Anhduy Phan - Contributions to UI as part of the frontend team, contributed to FXML code with classes like syllabuschatbot.fxml and syllabusclassinfo.fxml <br>
+#### Ace Lavilla - Contributions to UI as part of the frontend team, contributed to multiple controllers tied to each other such as the Calendar View Controller, Main Controller, Launch View controller, etc. <br>
 
 ### Problem/Issue:
 
-As students, we have a lot of classes with different policies, due dates, expecations, etc. Many students can't rely on Canvas to keep them up to date and more often than not, these students fall behind. Many students have to navigate through each syllabus
+As students, we have a lot of classes with different policies, due dates, expecations, etc. Many students can't rely on Canvas to keep them up to date and more often than not, these students fall behind. <br> Many students have to navigate through each syllabus
 individually and this is super time consuming. For professors this can be time consuming as well, they get emails from students who don't read the syllabus and have to repeat themselves multiple times.
 
 ### Previous works/Inspirations:
