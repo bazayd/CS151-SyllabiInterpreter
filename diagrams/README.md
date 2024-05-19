@@ -37,6 +37,6 @@
 
 # Class Diagram
 
-![Class Diagram](./classdiagram.png)
+![Class Diagram](./classdiagram.jpeg)
 
 ### The Class Diagram displays all of the program's classes, attributes, methods, and relationships they have among each other. The current class diagram demonstrates the possible classes, methods, and functions that may be used in the program. Some classes for FXML Controllers and GUI, methods and classes that involve the parsing of files, etc.
