@@ -89,17 +89,58 @@ taht way they can stay on top of their classes and professors can spend their ti
 
 ## How to run Syllabi Interpreter:
 
-In order to run the Interpreter, you run the program through the Main java class as shown below: <br>
+First, after cloning the repository make sure that you load all Maven dependencies before running anything! Below is how you can do so:<br>
 
-![Syllabus Main Page class](Snapshots/LaunchSyllabi.png) <br>
+You can go to where your pom.xml file is located at <br>
+![Pom file location](Snapshots/pomFile.png)<br>
+
+Now, right click your pom.xml file and you will be prompted with another menu where you should look for 'Maven' and click on that. <br> After clicking on Maven there 
+should be another option that says 'Reload Project', click that and all dependencies will install to the current project if not already installed. <br>
+![Reloading project](Snapshots/reloadMaven.png)<br>
+
+Another alternative is to click the Maven logo on the right hand side of your IntelliJ IDE and click the Reload symbol <br>
+![Reload alternative](Snapshots/alternativeReload.png)<br>
+
+There is also an option to reload the project and update all dependencies when you're on the Main Controller class, click that before running if you couldn't reload otherwise! <br>
+
+In order to run the Interpreter, you run the program through the Main Cotroller java class as shown below.: <br>
+
+![Syllabus Main Page class](Snapshots/LaunchInterpreter.png) <br>
 
 Once you run the Main class, you will be prompted to the Syllabi Intepreter main page: <br>
 
 ![Syllabi Interpreter main page](Snapshots/SyllabiMain.png) <br>
 
-The snapshot belows displays the following messages letting you know that the file you attached was read, in this case I attached a file named "testsyllabus":
+After clicking 'Upload Syllabus' you will be prompted to your File Explorer where you can submit a syllabus pdf: <br>
 
+![Syllabi upload through file explorer](Snapshots/FileAttachment.png)
+
+
+The snapshot belows displays the following messages letting you know that the file you attached was read, in this case I attached a file named "testsyllabus". The test syllabus
+is actually the syllabus for this class: <br>
+
+![File attachment](Snapshots/fileChosen.png) <br>
+![Test syllabus overview](Snapshots/testSyllabus.png) <br>
 ![Syllabus read message](Snapshots/FileRead.png) <br>
+
+
+Now, after attaching your syllabus you can now click on 'Calendar' and view the dates for certain class topics and exam dates. Here are a few snapshots for some of the months that had
+important events/topics covered: <br>
+
+![Snapshot showing calendar snapshot](Snapshots/CalendarView1.png)<br>
+![Snapshot showing calendar snapshot](Snapshots/CalendarView2.png)<br>
+![Snapshot showing calendar snapshot](Snapshots/CalendarView3.png)<br>
+
+
+After looking through your calendar, you can now click 'Home' and head over to your Todo List and look at certain assignments you'll need to do over the semester, lectures to attend, and your exams:
+
+![Snapshot of todo list](Snapshots/TodoList.png)<br>
+![Snapshot of todo list](Snapshots/TodoList2.png)<br>
+
+## Final Overview
+
+Our Syllabi Interpreter was meant to help students manage their workload much more efficiently, we hope that our Syllabi Interpreter could potentially help others or even inspire 
+students to take initiative and become more organized! (As well as stopping all procrastination). All links to proposal and slides with more information on Error handling, UI organization, and other design choices will be displayed there! Thank you.
 
 
 
