@@ -89,5 +89,11 @@ taht way they can stay on top of their classes and professors can spend their ti
 
 ## How to run Syllabi Interpreter:
 
+In order to run the Interpreter, you run the program through the Main java class as shown below: <br>
 
+![Syllabus Main Page class](Snapshots/LaunchSyllabi.png)
+
+Once you run the Main class, you will be prompted to the Syllabi Intepreter main page: <br>
+
+![Syllabi Interpreter main page](Snapshots/SyllabiMain.png)
 
